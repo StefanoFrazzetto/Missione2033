@@ -1,13 +1,10 @@
 package gameobjects;
 
-import algorithms.Node;
+import algorithms.*;
 
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * GameEngine
@@ -132,8 +129,10 @@ public class GameEngine implements Serializable {
                 break;
         }
 
-        if (isNodeFree(x, y))
+        if (isNodeFree(x, y)) {
             agent.setCoordinates(x, y);
+            moveEnemies();
+        }
     }
 
     public boolean isNodeFree(int x, int y) {
@@ -142,15 +141,17 @@ public class GameEngine implements Serializable {
         }
 
         for (Entity collidable : entityList) {
+            if(collidable instanceof Agent)
+                return true; // magari in retromarcia
+
             if (collidable.getxCoordinate() == x && collidable.getyCoordinate() == y)
                 if (collidable instanceof Door) {
                     Door door = (Door) collidable;
 
-                    if (!door.isOpen()) {
-                        return false;
-                    }
+                    return door.isOpen();
 
-                } else return false;
+                } else // ENEMY - EXIT
+                    return false;
         }
 
         return true;
@@ -177,6 +178,56 @@ public class GameEngine implements Serializable {
             nodes.add(new Node(node.getX(), node.getY() - 1));
 
         return nodes;
+    }
+
+    private List<Enemy> getEnemies() {
+        List<Enemy> enemies = new ArrayList<>();
+        for (Entity entity : entityList) {
+            if (entity instanceof Enemy) {
+                enemies.add((Enemy) entity);
+            }
+        }
+
+        return enemies;
+    }
+
+    private void moveEnemies() {
+        List<Enemy> enemies = getEnemies();
+
+
+//        AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(), 500, false);
+//        Path solution = aStarPathFinder.findPath(new UnitMover(), 4, 4, 1, 1);
+
+
+
+        for (Enemy enemy : enemies) {
+            AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(this), 100000000, false);
+            Path path = aStarPathFinder.findPath(
+                    new UnitMover(),
+                    enemy.getxCoordinate(),
+                    enemy.getyCoordinate(),
+                    agent.getxCoordinate(),
+                    agent.getyCoordinate()
+            );
+
+            System.out.println("AGENT");
+            System.out.println(agent.getxCoordinate());
+            System.out.println(agent.getyCoordinate());
+
+            System.out.println("ENEMY");
+            System.out.println(enemy.getxCoordinate());
+            System.out.println(enemy.getyCoordinate());
+
+
+
+            System.out.println("Move enemies 2 [FOR]");
+
+            if (path != null) {
+                Path.Step step = path.getStep(1);
+                enemy.setCoordinates(step.getX(), step.getY());
+                System.out.println("Move enemies 3 [Move the enemy!]");
+            }
+        }
     }
 
     /**
