@@ -1,12 +1,13 @@
 package server.controllers;
 
+import gameobjects.Direction;
 import gameobjects.GameEngine;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import server.Application;
+import server.responses.Message;
 import server.responses.Status;
-
-import java.io.IOException;
 
 /**
  * PlayController
@@ -17,17 +18,24 @@ import java.io.IOException;
 @RestController
 public class PlayController {
 
+    GameEngine gameEngine = Application.getEngine();
+
     @RequestMapping("/play")
     public Status status() {
 
-        GameEngine gameEngine = Application.getEngine();
         gameEngine.initializeGame();
 
-        try {
-            return Status.fromGameEngine(gameEngine);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Status("error", null, null);
-        }
+
+        return Status.fromGameEngine(gameEngine);
+    }
+
+    @RequestMapping("/play/move")
+    public Message move(@RequestParam(value = "d") String direction) {
+
+        Direction dir = Direction.fromCode(direction.charAt(0));
+
+        gameEngine.handleMovement(dir);
+
+        return new Message("Moving " + direction);
     }
 }

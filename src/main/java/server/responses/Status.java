@@ -17,10 +17,19 @@ public class Status {
     private final String serializedGameGrid;
     private final String serializedEntityList;
 
-    public static Status fromGameEngine(GameEngine gameEngine) throws IOException {
-        String gameGrid = Serializer.toString(gameEngine.getGameGrid());
-        String entityList = Serializer.toString((Serializable) gameEngine.getEntityList());
-        return new Status(gameEngine.getStatus(), gameGrid, entityList);
+    public static Status fromGameEngine(GameEngine gameEngine) {
+        String status = "error";
+        String gameGrid = null;
+        String entityList = null;
+
+        try {
+            gameGrid = Serializer.toString(gameEngine.getGameGrid());
+            entityList = Serializer.toString((Serializable) gameEngine.getEntityList());
+            status = gameEngine.getStatus();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Status(status, gameGrid, entityList);
     }
 
     public Status(String status, String serializedGameGrid, String serializedEntityList) {
