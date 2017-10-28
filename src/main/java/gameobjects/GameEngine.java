@@ -63,6 +63,7 @@ public class GameEngine implements Serializable {
         // Import the level from a file
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
         currentLevel = new Level(inputStream);
+        gameGrid = currentLevel.getGameGrid();
         entityList = currentLevel.getEntityList();
     }
 
