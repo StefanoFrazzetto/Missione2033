@@ -1,6 +1,7 @@
 package gameobjects;
 
-import java.io.*;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public class GameEngine implements Serializable {
 
     /**
      * The game status
-     *
+     * <p>
      * TODO: migrate to enum
      */
     transient private String status = "RUNNING";
@@ -63,6 +64,16 @@ public class GameEngine implements Serializable {
         currentLevel = new Level(inputStream);
         gameGrid = currentLevel.getGameGrid();
         entityList = currentLevel.getEntityList();
+
+        for (Entity entity : entityList) {
+            if (entity instanceof Agent) {
+                agent = (Agent) entity;
+                break;
+            }
+        }
+
+        if (agent == null)
+            throw new RuntimeException("No agent found!");
     }
 
     /**
@@ -81,7 +92,7 @@ public class GameEngine implements Serializable {
 
     /**
      * Initialise the right player type by decoding the string.
-     *
+     * <p>
      * We should probably check if the player type was already initialised
      * (this would avoid other players from intruding the game).
      *
@@ -99,7 +110,34 @@ public class GameEngine implements Serializable {
     }
 
     public void handleMovement(Direction direction) {
-        // DO stuff
+        int x = agent.getxCoordinate();
+        int y = agent.getyCoordinate();
+
+        switch (direction) {
+            case NORTH:
+                x -= 1;
+                break;
+            case EAST:
+                y += 1;
+                break;
+            case SOUTH:
+                x += 1;
+                break;
+            case WEST:
+                y -= 1;
+                break;
+        }
+
+        if (gameGrid.getGameObjectAt(x, y) != GameObject.FLOOR) {
+            return;
+        }
+
+        for (Entity collidable : entityList) {
+            if (collidable.getxCoordinate() == x && collidable.getyCoordinate() == y)
+                return;
+        }
+
+        agent.setCoordinates(x, y);
     }
 
     /**
