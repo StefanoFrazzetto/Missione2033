@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-
-<GridPane alignment="center" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Main">
+<?import java.net.URL?>
+<GridPane alignment="center" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="client.Main">
 
     <stylesheets>
-        <URL value="@main.css" />
+        <URL value="@main.css"/>
     </stylesheets>
 
     <MenuBar fx:id="menu" GridPane.rowIndex="0">
@@ -29,18 +20,21 @@
     <GridPane fx:id="menuGrid" alignment="CENTER" GridPane.rowIndex="1">
         <HBox GridPane.rowIndex="0">
             <VBox>
-                <Text text="Server address" textAlignment="CENTER" />
+                <Text text="Server address" textAlignment="CENTER"/>
                 <TextField promptText="Server Address" fx:id="serverHostField" text="localhost:8080"/>
             </VBox>
         </HBox>
         <HBox GridPane.rowIndex="1">
-            <Button onAction="#StartAsPlayerOne" text="Start as Player One" />
+            <Button onAction="#StartAsPlayerOne" text="Start as Player One"/>
         </HBox>
         <HBox GridPane.rowIndex="2">
-            <Button onAction="#StartAsPlayerTwo" text="Start as Player Two" />
+            <Button onAction="#StartAsPlayerTwo" text="Start as Player Two"/>
         </HBox>
         <HBox GridPane.rowIndex="3">
-            <Button onAction="#closeGame" text="Exit Game" />
+            <Button onAction="#spawnServer" text="Spawn Server"/>
+        </HBox>
+        <HBox GridPane.rowIndex="4">
+            <Button onAction="#closeGame" text="Exit Game"/>
         </HBox>
     </GridPane>
 </GridPane>

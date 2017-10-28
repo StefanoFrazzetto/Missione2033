@@ -82,6 +82,10 @@ public class Main extends Application {
         app.start(primaryStage);
     }
 
+    public void spawnServer() {
+        ((Runnable) () -> server.Application.main(new String[]{})).run();
+    }
+
     public void closeGame() {
         System.exit(0);
     }
