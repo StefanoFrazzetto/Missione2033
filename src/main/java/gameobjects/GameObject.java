@@ -8,7 +8,9 @@ package gameobjects;
 public enum GameObject {
     WALL('W'),
     FLOOR(' '),
-    PLAYER('P');
+    PLAYER('P'),
+    DOOR('D'),
+    ENEMY('E');
 
     private final char symbol;
 
@@ -18,6 +20,8 @@ public enum GameObject {
 
     /**
      * Return the enum associated with a char.
+     *
+     * If the object is not recognized, returns a wall.
      *
      * @param c - the char to look for
      * @return the {@link GameObject} corresponding to the char
@@ -29,7 +33,7 @@ public enum GameObject {
             }
         }
 
-        return null;
+        return WALL;
     }
 
     /**
