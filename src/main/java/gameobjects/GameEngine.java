@@ -157,10 +157,20 @@ public class GameEngine implements Serializable {
         return status;
     }
 
+    /**
+     * Open all the doors of the same type while closing the others.
+     *
+     * We can only have one type of door open at a time.
+     *
+     * @param doorType the door type
+     */
     public void openDoors(GameObject doorType) {
         for (Entity entity : entityList) {
-            if (entity instanceof Door && ((Door) entity).getType() == doorType) {
-                ((Door) entity).open();
+            if (entity instanceof Door) {
+                if (((Door) entity).getType() == doorType)
+                    ((Door) entity).open(); // if the door matches, open it
+                else
+                    ((Door) entity).close(); // otherwise close it
             }
         }
     }
