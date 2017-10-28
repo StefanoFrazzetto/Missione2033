@@ -74,7 +74,7 @@ public class GameGrid implements Iterable {
      * Get the GameObject positioned at (x, y).
      *
      * @param column the row of the GameObject
-     * @param row the column of the GameObject
+     * @param row    the column of the GameObject
      * @return GameObject
      * @throws ArrayIndexOutOfBoundsException if the coordinates are outside the grid bounds
      */
@@ -193,8 +193,8 @@ public class GameGrid implements Iterable {
      * @see Iterator
      */
     public class GridIterator implements Iterator<GameObject> {
+        int column = -1;
         int row = 0;
-        int column = 0;
 
         /**
          * @return the current row
@@ -212,16 +212,19 @@ public class GameGrid implements Iterable {
 
         @Override
         public boolean hasNext() {
-            return !(row == ROWS - 1 && column == COLUMNS - 1);
+            return !(column == COLUMNS - 1 && row == ROWS - 1);
         }
 
         @Override
         public GameObject next() {
-            if (column >= COLUMNS) {
+            if (column < COLUMNS - 1) {
+                column++;
+            } else {
                 column = 0;
                 row++;
             }
-            return getGameObjectAt(column++, row);
+
+            return getGameObjectAt(column, row);
         }
     }
 }
