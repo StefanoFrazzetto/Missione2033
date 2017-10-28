@@ -1,13 +1,22 @@
 package client;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 public class Player2Controller extends PlayerController {
-    private Player2Model model;
-
     public Player2Controller() {
-        model = new Player2Model();
+        Platform.runLater(() -> {
+            model = new Player2Model();
+
+            try {
+                model.initGame();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
     @Override
@@ -18,5 +27,10 @@ public class Player2Controller extends PlayerController {
     @Override
     protected boolean showCharacters() {
         return false;
+    }
+
+    @Override
+    public int getRectSize(){
+        return 15;
     }
 }

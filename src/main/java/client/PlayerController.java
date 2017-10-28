@@ -15,10 +15,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public abstract class PlayerController {
-    public static final int SIZE = 25;
     public GridPane gridPane;
 
-    protected PlayerModel model;
+    PlayerModel model;
 
     private Image image = new Image(getClass().getClassLoader().getResourceAsStream("boy.png"));
 
@@ -36,13 +35,13 @@ public abstract class PlayerController {
 
     protected abstract boolean showCharacters();
 
-    public void draw() {
+    void draw() {
         GameGrid.GridIterator iterator = (GameGrid.GridIterator) model.getGameGrid().iterator();
 
 
         while (iterator.hasNext()) {
             GameObject next = iterator.next();
-            Rectangle rect = new Rectangle(SIZE, SIZE);
+            Rectangle rect = new Rectangle(getRectSize(), getRectSize());
 
             int x = iterator.getColumn();
             int y = iterator.getRow();
@@ -68,26 +67,30 @@ public abstract class PlayerController {
             gridPane.add(rect, y, x);
         }
 
-        if(showCharacters())
-        for (Entity asd : model.entityList) {
-            Rectangle rect = new Rectangle(SIZE, SIZE);
+        if (showCharacters())
+            for (Entity asd : model.entityList) {
+                Rectangle rect = new Rectangle(getRectSize(), getRectSize());
 
-            rect.setFill(Color.RED);
+                rect.setFill(Color.RED);
 
-            if (asd instanceof Agent) {
-                ImagePattern imagePattern = new ImagePattern(image);
+                if (asd instanceof Agent) {
+                    ImagePattern imagePattern = new ImagePattern(image);
 
-                //image.is
+                    //image.is
 
-                WritableImage wImage = new WritableImage(SIZE, SIZE);
+                    WritableImage wImage = new WritableImage(getRectSize(), getRectSize());
 
 
-                rect.setFill(imagePattern);
+                    rect.setFill(imagePattern);
+                }
+
+                gridPane.add(rect, asd.getyCoordinate(), asd.getxCoordinate());
             }
 
-            gridPane.add(rect, asd.getyCoordinate(), asd.getxCoordinate());
-        }
-
         gridPane.getScene().getWindow().sizeToScene();
+    }
+
+    protected int getRectSize() {
+        return 25;
     }
 }
