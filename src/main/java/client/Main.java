@@ -36,7 +36,7 @@ public class Main extends Application {
         primaryStage.sizeToScene();
 
         scene.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER){
+            if (event.getCode() == KeyCode.ENTER) {
                 StartAsPlayerOne();
             }
         });
@@ -47,11 +47,7 @@ public class Main extends Application {
     public void StartAsPlayerOne() {
         Player1App app = new Player1App();
 
-        try {
-            app.start(primaryStage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        app.start(primaryStage);
     }
 
     public void StartAsPlayerTwo() {
