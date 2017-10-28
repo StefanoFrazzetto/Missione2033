@@ -1,5 +1,6 @@
 package client;
 
+import gameobjects.Direction;
 import gameobjects.GameGrid;
 import gameobjects.GameObject;
 import javafx.application.Platform;
@@ -10,29 +11,42 @@ import javafx.scene.shape.Rectangle;
 public class Player1Controller {
 
     public GridPane gridPane;
-    private GameGrid gameGrid;
+    private Player1Model model;
 
     public Player1Controller() {
-        this.gameGrid = Player1App.getGameGrid();
+        model = new Player1Model();
+        model.initGame();
     }
 
     public void initialize() {
-        System.out.println("Controller is initialising Player1Controller");
+        System.out.printf("%s is initialising...%n", getClass().getName());
 
         Platform.runLater(() -> {
-
             gridPane.getScene().setOnKeyPressed(event -> {
-
+                switch (event.getText().toUpperCase()) {
+                    case "W":
+                        model.movePlayer(Direction.NORTH);
+                        break;
+                    case "S":
+                        model.movePlayer(Direction.SOUTH);
+                        break;
+                    case "D":
+                        model.movePlayer(Direction.EAST);
+                        break;
+                    case "A":
+                        model.movePlayer(Direction.WEST);
+                        break;
+                    default:
+                        System.out.printf("[%s]%n", event.getCode());
+                }
             });
 
             draw();
-
-
         });
     }
 
     public void draw() {
-        GameGrid.GridIterator iterator = (GameGrid.GridIterator) gameGrid.iterator();
+        GameGrid.GridIterator iterator = (GameGrid.GridIterator) model.getGameGrid().iterator();
 
         while (iterator.hasNext()) {
             GameObject next = iterator.next();
