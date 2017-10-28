@@ -17,12 +17,12 @@ public class Level {
 
     private final GameGrid staticObjectsGrid;
 
-    private final List<Entity> entitiesList;
+    private final List<Entity> entityList;
 
     public Level(InputStream stream) {
         List<String> rawLevel = parseStreamContent(stream);
         staticObjectsGrid = new GameGrid(rawLevel.size(), rawLevel.size());
-        entitiesList = new ArrayList<>();
+        entityList = new ArrayList<>();
 
         parseRawLevel(rawLevel);
     }
@@ -32,7 +32,7 @@ public class Level {
      */
     public Level(int size) {
         staticObjectsGrid = new GameGrid(size, size);
-        entitiesList = new ArrayList<>();
+        entityList = new ArrayList<>();
     }
 
     /**
@@ -105,7 +105,7 @@ public class Level {
                     staticObjectsGrid.putGameObjectAt(row, column, GameObject.FLOOR);
                     entity.setCoordinates(row, column);
 
-                    entitiesList.add(entity);
+                    entityList.add(entity);
                 }
             } // END- String loop
         } // END - List loop
@@ -120,6 +120,6 @@ public class Level {
     }
 
     public List<Entity> getEntityList() {
-        return entitiesList;
+        return entityList;
     }
 }
