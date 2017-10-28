@@ -35,4 +35,7 @@ public class Door extends Entity implements Serializable {
         return type;
     }
 
+    public boolean isOpen() {
+        return open;
+    }
 }
