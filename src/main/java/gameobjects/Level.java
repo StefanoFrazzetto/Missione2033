@@ -106,16 +106,15 @@ public class Level {
 
                         case PLAYER:
                             entity = new Agent();
-                            ((Character) entity).setCoordinates(row, column);
                             break;
 
                         default:
                         case ENEMY:
                             entity = new Enemy();
-                            ((Character) entity).setCoordinates(row, column);
                             break;
                     }
 
+                    entity.setCoordinates(row, column);
                     gameGrid.putGameObjectAt(row, column, GameObject.FLOOR);
 
                     entityList.add(entity);
