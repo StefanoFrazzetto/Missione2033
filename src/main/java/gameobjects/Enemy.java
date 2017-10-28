@@ -6,7 +6,7 @@ package gameobjects;
  * @author stefano
  * @version 1.0.0
  */
-public class Enemy extends Entity {
+public class Enemy extends Character {
 
     /** The default health value */
     private static final int DEFAULT_ENEMY_HEALTH = 100;

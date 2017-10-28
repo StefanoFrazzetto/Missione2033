@@ -88,24 +88,24 @@ public class Level {
                                 currentGameObject == GameObject.DOOR
                         ) {
                     gameGrid.putGameObjectAt(row, column, currentGameObject);
-                } else { // entity
+                } else { // character
 
-                    Entity entity;
+                    Character character;
                     switch (currentGameObject) {
                         case PLAYER:
-                            entity = new Agent();
+                            character = new Agent();
                             break;
 
                         default:
                         case ENEMY:
-                            entity = new Enemy();
+                            character = new Enemy();
                             break;
                     }
 
                     gameGrid.putGameObjectAt(row, column, GameObject.FLOOR);
-                    entity.setCoordinates(row, column);
+                    character.setCoordinates(row, column);
 
-                    entityList.add(entity);
+                    entityList.add(character);
                 }
             } // END- String loop
         } // END - List loop

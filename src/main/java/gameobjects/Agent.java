@@ -6,7 +6,7 @@ package gameobjects;
  * @author stefano
  * @version 1.0.0
  */
-public class Agent extends Entity {
+public class Agent extends Character {
 
     /** The default health value */
     private final static int DEFAULT_PLAYER_HEALTH = 100;

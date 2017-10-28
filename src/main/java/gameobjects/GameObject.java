@@ -1,6 +1,7 @@
 package gameobjects;
 
 import java.io.Serializable;
+import java.lang.Character;
 
 /**
  * GameObject represents the objects in a game.
