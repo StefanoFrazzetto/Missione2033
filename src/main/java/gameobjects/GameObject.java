@@ -9,11 +9,16 @@ import java.lang.Character;
  * Each object has a symbol which is used to decode the save files.
  */
 public enum GameObject implements Serializable {
-    WALL('W'),
+    PLAYER('A'),
     FLOOR(' '),
-    PLAYER('P'),
-    DOOR('D'),
-    ENEMY('E');
+    ENEMY('H'),
+    WALL('W'),
+    DOOR_X('X'),
+    DOOR_O('O'),
+    DOOR_P('P'),
+    DOOR_R('R'),
+    DOOR_S('S'),
+    DOOR_T('T');
 
     private final char symbol;
 

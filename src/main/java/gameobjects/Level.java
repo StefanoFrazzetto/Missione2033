@@ -84,28 +84,37 @@ public class Level {
 
                 if ( // static object
                         currentGameObject == GameObject.FLOOR ||
-                                currentGameObject == GameObject.WALL ||
-                                currentGameObject == GameObject.DOOR
+                                currentGameObject == GameObject.WALL
                         ) {
                     gameGrid.putGameObjectAt(row, column, currentGameObject);
-                } else { // character
+                } else { // entity
 
-                    Character character;
+                    Entity entity;
                     switch (currentGameObject) {
+                        case DOOR_X:
+                        case DOOR_O:
+                        case DOOR_P:
+                        case DOOR_R:
+                        case DOOR_S:
+                        case DOOR_T:
+                            entity = new Door(currentGameObject, false);
+                            break;
+
                         case PLAYER:
-                            character = new Agent();
+                            entity = new Agent();
+                            ((Character) entity).setCoordinates(row, column);
                             break;
 
                         default:
                         case ENEMY:
-                            character = new Enemy();
+                            entity = new Enemy();
+                            ((Character) entity).setCoordinates(row, column);
                             break;
                     }
 
                     gameGrid.putGameObjectAt(row, column, GameObject.FLOOR);
-                    character.setCoordinates(row, column);
 
-                    entityList.add(character);
+                    entityList.add(entity);
                 }
             } // END- String loop
         } // END - List loop
