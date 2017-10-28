@@ -10,6 +10,7 @@ import java.lang.Character;
  */
 public enum GameObject implements Serializable {
     PLAYER('A'),
+    EXIT('Q'),
     FLOOR(' '),
     ENEMY('H'),
     WALL('W'),

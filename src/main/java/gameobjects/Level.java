@@ -91,6 +91,10 @@ public class Level {
 
                     Entity entity;
                     switch (currentGameObject) {
+                        case EXIT:
+                            entity = new Exit();
+                            break;
+
                         case DOOR_X:
                         case DOOR_O:
                         case DOOR_P:
