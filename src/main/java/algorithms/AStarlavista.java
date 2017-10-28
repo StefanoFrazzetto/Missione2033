@@ -2,10 +2,7 @@ package algorithms;
 
 import gameobjects.GameEngine;
 
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
 /**
  * AStarlavista
@@ -13,20 +10,12 @@ import java.util.Set;
  * @author stefano
  * @version 1.0.0
  */
-public class AStarlavista {
-    private Set<Node> closedSet;
+abstract public class AStarlavista {
 
-    private Map<Node, Node> cameFrom;
-
-    private PriorityQueue<Node> openSet;
-
-    private int gScore;
-
-    private Double fScore;
-
-    public Set<Node> AStarlavista(GameEngine gameEngine, Node source, Node goal) {
-        gScore = Integer.MAX_VALUE;
-        fScore = Double.POSITIVE_INFINITY;
+    public static Set<Node> AStarlavista(GameEngine gameEngine, Node source, Node goal) {
+        Set<Node> closedSet = new HashSet<>();
+        Map<Node, Node> cameFrom = new HashMap<>();
+        PriorityQueue<Node> openSet = new PriorityQueue<>();
 
         Node current = source;
         openSet.add(current);
@@ -40,7 +29,7 @@ public class AStarlavista {
                 return reconstructPath(cameFrom, current);
             }
 
-            openSet.remove(current);
+//            openSet.remove(current);
             closedSet.add(current);
 
             Set<Node> neighbours = gameEngine.freeAdjacentNodes(current);
@@ -53,6 +42,7 @@ public class AStarlavista {
                     openSet.add(neighbour); // new node
 
                 double tentativeGScore = current.getGScore() + Node.distance(current, neighbour);
+                System.out.println("G SCORE: " + neighbour.getGScore());
                 if (tentativeGScore >= neighbour.getGScore())
                     continue; // not a better path
 
@@ -65,7 +55,7 @@ public class AStarlavista {
         return null; // falliu, minchia!
     }
 
-    public Set<Node> reconstructPath(Map<Node, Node> path, Node current){
+    public static Set<Node> reconstructPath(Map<Node, Node> path, Node current){
         Set<Node> totalPath = new LinkedHashSet<>();
         totalPath.add(current);
 
