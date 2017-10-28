@@ -1,9 +1,13 @@
 package gameobjects;
 
+import algorithms.Node;
+
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * GameEngine
@@ -128,8 +132,13 @@ public class GameEngine implements Serializable {
                 break;
         }
 
+        if (isNodeFree(x, y))
+            agent.setCoordinates(x, y);
+    }
+
+    public boolean isNodeFree(int x, int y) {
         if (gameGrid.getGameObjectAt(x, y) != GameObject.FLOOR) {
-            return;
+            return false;
         }
 
         for (Entity collidable : entityList) {
@@ -137,13 +146,37 @@ public class GameEngine implements Serializable {
                 if (collidable instanceof Door) {
                     Door door = (Door) collidable;
 
-                    if (!door.isOpen())
-                        return;
+                    if (!door.isOpen()) {
+                        return false;
+                    }
 
-                } else return;
+                } else return false;
         }
 
-        agent.setCoordinates(x, y);
+        return true;
+    }
+
+    /**
+     * 100% money back guarantee
+     */
+    public Set<Node> freeAdjacentNodes(Node node) {
+        Set<Node> nodes = new HashSet<>();
+
+
+        if (isNodeFree(node.getX() - 1, node.getY()))
+            nodes.add(new Node(node.getX() - 1, node.getY()));
+
+
+        if (isNodeFree(node.getX() + 1, node.getY()))
+            nodes.add(new Node(node.getX() + 1, node.getY()));
+
+        if (isNodeFree(node.getX(), node.getY() + 1))
+            nodes.add(new Node(node.getX(), node.getY() + 1));
+
+        if (isNodeFree(node.getX(), node.getY() - 1))
+            nodes.add(new Node(node.getX(), node.getY() - 1));
+
+        return nodes;
     }
 
     /**
@@ -159,7 +192,7 @@ public class GameEngine implements Serializable {
 
     /**
      * Open all the doors of the same type while closing the others.
-     *
+     * <p>
      * We can only have one type of door open at a time.
      *
      * @param doorType the door type
