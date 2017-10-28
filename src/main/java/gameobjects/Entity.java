@@ -1,5 +1,7 @@
 package gameobjects;
 
+import java.awt.*;
+
 /**
  * Entity
  *
@@ -10,8 +12,29 @@ abstract class Entity {
 
     private int health;
 
+    private int xCoordinate;
+
+    private int yCoordinate;
+
     Entity(int health) {
         this.health = health;
+    }
+
+    public void setCoordinates(int x, int y) {
+        this.xCoordinate = x;
+        this.yCoordinate = y;
+    }
+
+    public int getxCoordinate() {
+        return xCoordinate;
+    }
+
+    public int getyCoordinate() {
+        return yCoordinate;
+    }
+
+    public Point getCoordinates() {
+        return new Point(xCoordinate, yCoordinate);
     }
 
     /**
