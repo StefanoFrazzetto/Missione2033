@@ -134,7 +134,13 @@ public class GameEngine implements Serializable {
 
         for (Entity collidable : entityList) {
             if (collidable.getxCoordinate() == x && collidable.getyCoordinate() == y)
-                return;
+                if (collidable instanceof Door) {
+                    Door door = (Door) collidable;
+
+                    if (!door.isOpen())
+                        return;
+
+                } else return;
         }
 
         agent.setCoordinates(x, y);
