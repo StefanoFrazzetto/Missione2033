@@ -4,15 +4,12 @@ import gameobjects.GameEngine;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.Application;
-import server.responses.Message;
-import utils.Serializer;
+import server.responses.Status;
 
 import java.io.IOException;
 
 /**
  * PlayController
- *
- * This should return the map, the objects in the map, etc.
  *
  * @author stefano
  * @version 1.0.0
@@ -21,16 +18,16 @@ import java.io.IOException;
 public class PlayController {
 
     @RequestMapping("/play")
-    public Message message() {
+    public Status status() {
 
         GameEngine gameEngine = Application.getEngine();
         gameEngine.initializeGame();
 
         try {
-            return new Message(Serializer.toString(gameEngine));
+            return Status.fromGameEngine(gameEngine);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Message("Error while initializing the game");
+            return new Status("error", null, null);
         }
     }
 }
