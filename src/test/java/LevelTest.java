@@ -31,6 +31,6 @@ public class LevelTest {
 
         level.parseRawLevel(rawLevel);
 
-        Assert.assertNotNull(level.getStaticObjectsGrid());
+        Assert.assertNotNull(level.getGameGrid());
     }
 }
