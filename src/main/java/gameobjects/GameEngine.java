@@ -100,20 +100,15 @@ public class GameEngine implements Serializable {
         return playerType;
     }
 
+    public void handleMovement(Direction direction) {
+        // DO stuff
+    }
+
     /**
      * Initialize the agent
      */
     private void initAgent() {
         this.agent = new Agent();
-    }
-
-    public ObjectOutputStream serialize() throws IOException {
-        OutputStream outStream = new ByteArrayOutputStream();
-        ObjectOutputStream ojectStreamOut = new ObjectOutputStream(outStream);
-        ojectStreamOut.writeObject(this);
-        ojectStreamOut.close();
-
-        return ojectStreamOut;
     }
 
     public String getStatus() {
