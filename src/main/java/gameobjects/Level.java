@@ -23,6 +23,8 @@ public class Level {
         List<String> rawLevel = parseStreamContent(stream);
         staticObjectsGrid = new GameGrid(rawLevel.size(), rawLevel.size());
         entitiesList = new ArrayList<>();
+
+        parseRawLevel(rawLevel);
     }
 
     /**
