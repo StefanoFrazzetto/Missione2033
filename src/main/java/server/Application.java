@@ -15,4 +15,8 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
+    public static GameEngine getEngine() {
+        return engine;
+    }
+
 }
