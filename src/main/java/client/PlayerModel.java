@@ -4,6 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import gameobjects.Entity;
 import gameobjects.GameGrid;
 import utils.Serializer;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 public abstract class PlayerModel {
     protected GameGrid gameGrid;
-    protected List entityList;
+    protected List<Entity> entityList;
 
     public GameGrid getGameGrid() {
         return gameGrid;
@@ -40,7 +41,8 @@ public abstract class PlayerModel {
 
             assert gameGrid != null;
 
-            entityList = (List) Serializer.fromString(serializedEntityList);
+            //noinspection unchecked
+            entityList = (List<Entity>) Serializer.fromString(serializedEntityList);
 
             assert entityList != null;
 
