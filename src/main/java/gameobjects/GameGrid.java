@@ -212,7 +212,7 @@ public class GameGrid implements Iterable {
 
         @Override
         public boolean hasNext() {
-            return !(row == ROWS && column == COLUMNS);
+            return !(row == ROWS - 1 && column == COLUMNS - 1);
         }
 
         @Override
