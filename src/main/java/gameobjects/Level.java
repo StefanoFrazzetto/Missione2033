@@ -21,7 +21,7 @@ public class Level {
 
     public Level(InputStream stream) {
         List<String> rawLevel = parseStreamContent(stream);
-        gameGrid = new GameGrid(rawLevel.size(), rawLevel.size());
+        gameGrid = new GameGrid(rawLevel.size(), rawLevel.get(0).length());
         entityList = new ArrayList<>();
 
         parseRawLevel(rawLevel);
@@ -109,6 +109,8 @@ public class Level {
                 }
             } // END- String loop
         } // END - List loop
+
+        System.out.println(gameGrid);
     }
 
     public String toString() {

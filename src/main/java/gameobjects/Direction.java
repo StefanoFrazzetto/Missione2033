@@ -53,7 +53,7 @@ public enum Direction {
         return code;
     }
 
-    public Direction fromCode(char c) {
+    public static Direction fromCode(char c) {
         if (c == NORTH.getCode())
             return NORTH;
         else if (c == SOUTH.getCode())

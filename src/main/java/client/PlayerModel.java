@@ -5,20 +5,20 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import gameobjects.GameGrid;
-import gameobjects.GameObject;
+import utils.Serializer;
+
+import java.io.IOException;
+import java.util.List;
 
 public abstract class PlayerModel {
     protected GameGrid gameGrid;
+    protected List entityList;
 
     public GameGrid getGameGrid() {
         return gameGrid;
     }
 
     public void initGame() throws UnirestException {
-        // load the game grid async?
-
-        // HERE WE SHOULD LOAD THE MAP
-
         long startTime = System.currentTimeMillis();
 
         HttpResponse<JsonNode> jsonResponse = Unirest.get(Main.getHost() + "/play")
@@ -29,14 +29,24 @@ public abstract class PlayerModel {
 
         System.out.println(estimatedTime + " ms elapsed for the init request.");
 
-        System.out.println(jsonResponse.getBody().toString());
+        HttpResponse<JsonNode> jsonResponseStatus = Unirest.get(Main.getHost() + "/status")
+                .header("accept", "application/json")
+                .asJson();
 
-        // TEMP MODEL HERE
-        gameGrid = new GameGrid(50, 50);
-        gameGrid.putGameObjectAt(0, 0, GameObject.fromChar('W'));
-        gameGrid.putGameObjectAt(1, 1, GameObject.fromChar('P'));
-        gameGrid.putGameObjectAt(2, 2, GameObject.fromChar('W'));
-        gameGrid.putGameObjectAt(3, 3, GameObject.fromChar('W'));
-        gameGrid.putGameObjectAt(4, 4, GameObject.fromChar('W'));
+        String serializedGameGrid = jsonResponseStatus.getBody().getObject().getString("serializedGameGrid");
+        String serializedEntityList = jsonResponseStatus.getBody().getObject().getString("serializedEntityList");
+        try {
+            gameGrid = (GameGrid) Serializer.fromString(serializedGameGrid);
+
+            assert gameGrid != null;
+
+            entityList = (List) Serializer.fromString(serializedEntityList);
+
+            assert entityList != null;
+
+            // We need some heavier validation here
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

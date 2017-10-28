@@ -74,7 +74,7 @@ public class Player1Controller {
             }
 
 
-            gridPane.add(rect, x, y);
+            gridPane.add(rect, y, x);
         }
 
         gridPane.getScene().getWindow().sizeToScene();

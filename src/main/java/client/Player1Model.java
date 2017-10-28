@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Player1Model extends PlayerModel {
     public void movePlayer(Direction direction) {
-        Unirest.get(String.format("%s/move?d=%s", Main.getHost(), direction.getCode())).asBinaryAsync();
+        Unirest.get(String.format("%s/play/move?d=%s", Main.getHost(), direction.getCode())).asBinaryAsync();
     }
 
     public Point2D getPlayerPosition() {
