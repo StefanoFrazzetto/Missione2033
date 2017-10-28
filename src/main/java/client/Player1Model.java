@@ -38,6 +38,22 @@ public class Player1Model extends PlayerModel {
         movePlayer(direction, null);
     }
 
+    public void movePlayerSync(Direction direction, Runnable callback)  {
+        long startTime = System.currentTimeMillis();
+
+        try {
+            Unirest.get(String.format("%s/play/move?d=%s", Main.getHost(), direction.getCode())).asBinary();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        long estimatedTime = System.currentTimeMillis() - startTime;
+
+        System.out.println(estimatedTime + " ms to send the control.");
+
+        Platform.runLater(callback);
+    }
+
     public Point2D getPlayerPosition() {
         return new Point2D(0, 0);
     }

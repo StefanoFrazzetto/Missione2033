@@ -32,6 +32,8 @@ public abstract class PlayerModel {
     }
 
     public void updateEntityList() throws UnirestException, IOException, ClassNotFoundException {
+        long startTime = System.currentTimeMillis();
+
         HttpResponse<JsonNode> jsonResponseStatus = Unirest.get(Main.getHost() + "/status/entities")
                 .header("accept", "application/json")
                 .asJson();
@@ -40,6 +42,10 @@ public abstract class PlayerModel {
 
         //noinspection unchecked
         entityList = (List<Entity>) Serializer.fromString(serializedEntityList);
+
+        long endTime = System.currentTimeMillis();
+
+        System.out.println(startTime - endTime + " ms to update entity list");
     }
 
     public void initGame() throws UnirestException {

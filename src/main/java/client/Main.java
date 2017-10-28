@@ -77,9 +77,9 @@ public class Main extends Application {
     public void StartAsPlayerTwo() {
         loadHostName();
 
-//        Player2App app = new Player2App();
-//
-//        app.start(primaryStage);
+        Player2App app = new Player2App();
+
+        app.start(primaryStage);
     }
 
     public void closeGame() {
