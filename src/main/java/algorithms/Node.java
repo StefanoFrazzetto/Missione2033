@@ -4,7 +4,7 @@ public class Node implements Comparable<Node> {
     private int x;
     private int y;
 
-    private int g; // cost of the path from start to n (current node)
+    private Double g; // cost of the path from start to n (current node)
     private Double h; // estimate cost of the cheapest path from n (current node) to the goal
     private Double f; // sum of g + h
 
@@ -13,7 +13,15 @@ public class Node implements Comparable<Node> {
         this.y = y;
     }
 
-    public void setGScore(int gScore) {
+    public Double getGScore() {
+        return g;
+    }
+
+    public Double getFScore() {
+        return f;
+    }
+
+    public void setGScore(Double gScore) {
         this.g = gScore;
     }
 
@@ -38,8 +46,12 @@ public class Node implements Comparable<Node> {
      * @param target
      * @return
      */
-    public static Double h(Node source, Node target) {
+    public static Double distance(Node source, Node target) {
         return Math.sqrt(Math.pow(target.getX() - source.getX(), 2) + Math.pow(target.getY() - source.getY(), 2));
+    }
+
+    public static Double h(Node source, Node target) {
+        return distance(source, target);
     }
 
     public boolean equals(Node node) {
@@ -48,6 +60,6 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node o) {
-        return Integer.compare(this.g, o.g);
+        return Double.compare(this.g, o.g);
     }
 }
