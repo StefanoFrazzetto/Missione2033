@@ -1,3 +1,5 @@
+default try level
+
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 w          w          w          w          w          w          w         w
 w          w          R          w          w          w          O         w
@@ -30,5 +32,62 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 w - wall
 E - entry
 Q - Exit
+H - Hostile
 
 Different type of doors ( X O P R S T)
+
+Level 1 
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+w          w          w          w          w          w          w         w
+w          w          R          w          w          w          O         w
+E          O          w          S          P          S          w         w
+w          w          w          w          w          w          w         w
+wwwwwwXwwwwwwwwwwPwwwwwwwwwTwwwwwwwwwwwwXwwwwwwwOwwwwwwwwwwwRwwwwwwwwwwXwwwww
+w          w          w          w          w          w          w         w
+w          w   HHH    w          w   HHH    w          w          w         w
+w          S    H     X          O    H     R          X          S         w
+w          w          w          w          w          w          w         w
+wwwwwTwwwwwwwwwwTwwwwwwwwwPwwwwwwwwwwwwTwwwwwwwwwwPwwwwwwwwwwOwwwwwwwwwTwwwww
+w          w          w          w          w          w          w         w
+w          w          w          w          w   HHH    w          w         w
+w          O          S          X          R    H     S          P         w
+w          w          w          w          w          w          w         w
+wwwwwwRwwwwwwwwwwXwwwwwwwwwOwwwwwwwwwwwwOwwwwwwwXwwwwwwwwwwwwRwwwwwwwwXwwwwww
+w          w          w          w          w          w          w         w
+w          w          w   HHH    w          w   HHH    w   HHH    w         w
+w          S          P    H     R          S    H     O    H     S         Q
+w          w          w          w          w          w          w         w
+wwwwwXwwwwwwwwwwRwwwwwwwwwwwXwwwwwwwwwwTwwwwwwwwwTwwwwwwwwwwPwwwwwwwwwwwwwwww
+w          w          w          w          w          w          w         w
+w          w          w          w          w          w          w         w
+w          P          O          P          X          O          R         w
+w          w          w          w          w          w          w         w
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
+Level 2 - same rooms, different hostile sports
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+w          w          w          w          w          w          w         w
+w          w   HHH    R          w  HHH     w          w          O         w
+E          O    H     w          S   H      P          S          w         w
+w          w          w          w          w          w          w         w
+wwwwwwXwwwwwwwwwwPwwwwwwwwwTwwwwwwwwwwwwXwwwwwwwOwwwwwwwwwwwRwwwwwwwwwwXwwwww
+w          w          w          w          w          w          w         w
+w          w          w          w          w          w          w         w
+w          S          X          O          R          X          S         w
+w          w          w          w          w          w          w         w
+wwwwwTwwwwwwwwwwTwwwwwwwwwPwwwwwwwwwwwwTwwwwwwwwwwPwwwwwwwwwwOwwwwwwwwwTwwwww
+w          w          w          w          w          w          w         w
+w   HHH    w          w          w          w   HHH    w   HHH    w  HHH    w
+w    H     O          S          X          R    H     S    H     P   H     w
+w          w          w          w          w          w          w         w
+wwwwwwRwwwwwwwwwwXwwwwwwwwwOwwwwwwwwwwwwOwwwwwwwXwwwwwwwwwwwwRwwwwwwwwXwwwwww
+w          w          w          w          w          w          w         w
+w          w          w          w          w          w   HHH    w         w
+w          S          P          R          S          O    H     S         Q
+w          w          w          w          w          w          w         w
+wwwwwXwwwwwwwwwwRwwwwwwwwwwwXwwwwwwwwwwTwwwwwwwwwTwwwwwwwwwwPwwwwwwwwwwwwwwww
+w          w          w          w          w          w          w         w
+w          w          w  HHH     w  HHH     w          w          w         w
+w          P          O   H      P   H      X          O          R         w
+w          w          w          w          w          w          w         w
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
