@@ -6,6 +6,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import gameobjects.Direction;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 
 import java.util.List;
@@ -16,19 +17,19 @@ public class Player1Model extends PlayerModel {
             @Override
             public void completed(HttpResponse<JsonNode> response) {
                 if (callback != null)
-                    callback.run();
+                    Platform.runLater(callback);
             }
 
             @Override
             public void failed(UnirestException e) {
                 if (callback != null)
-                    callback.run();
+                    Platform.runLater(callback);
             }
 
             @Override
             public void cancelled() {
                 if (callback != null)
-                    callback.run();
+                    Platform.runLater(callback);
             }
         });
     }

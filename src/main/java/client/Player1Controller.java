@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
+
 public class Player1Controller {
 
     public GridPane gridPane;
@@ -27,22 +29,36 @@ public class Player1Controller {
 
         Platform.runLater(() -> {
             gridPane.getScene().setOnKeyPressed(event -> {
+                Direction d = null;
+
                 switch (event.getText().toUpperCase()) {
                     case "W":
-                        model.movePlayer(Direction.NORTH);
+                        d = Direction.NORTH;
                         break;
                     case "S":
-                        model.movePlayer(Direction.SOUTH);
+                        d = Direction.SOUTH;
                         break;
                     case "D":
-                        model.movePlayer(Direction.EAST);
+                        d = Direction.EAST;
                         break;
                     case "A":
-                        model.movePlayer(Direction.WEST);
+                        d = Direction.WEST;
                         break;
                     default:
                         System.out.printf("[%s]%n", event.getCode());
                 }
+
+                if (d != null)
+                    model.movePlayer(d, () -> {
+                        try {
+                            System.err.println("ORCO");
+                            model.updateEntityList();
+                        } catch (UnirestException | ClassNotFoundException | IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            draw();
+                        }
+                    });
             });
 
             draw();

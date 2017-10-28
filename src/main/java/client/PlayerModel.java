@@ -19,6 +19,29 @@ public abstract class PlayerModel {
         return gameGrid;
     }
 
+    public void updateGridGrid() throws UnirestException, IOException, ClassNotFoundException {
+        HttpResponse<JsonNode> jsonResponseStatus = Unirest.get(Main.getHost() + "/status")
+                .header("accept", "application/json")
+                .asJson();
+
+        String serializedGameGrid = jsonResponseStatus.getBody().getObject().getString("serializedGameGrid");
+
+        gameGrid = (GameGrid) Serializer.fromString(serializedGameGrid);
+
+        assert gameGrid != null;
+    }
+
+    public void updateEntityList() throws UnirestException, IOException, ClassNotFoundException {
+        HttpResponse<JsonNode> jsonResponseStatus = Unirest.get(Main.getHost() + "/status/entities")
+                .header("accept", "application/json")
+                .asJson();
+
+        String serializedEntityList = jsonResponseStatus.getBody().getObject().getString("serializedEntityList");
+
+        //noinspection unchecked
+        entityList = (List<Entity>) Serializer.fromString(serializedEntityList);
+    }
+
     public void initGame() throws UnirestException {
         long startTime = System.currentTimeMillis();
 
@@ -30,12 +53,9 @@ public abstract class PlayerModel {
 
         System.out.println(estimatedTime + " ms elapsed for the init request.");
 
-        HttpResponse<JsonNode> jsonResponseStatus = Unirest.get(Main.getHost() + "/status")
-                .header("accept", "application/json")
-                .asJson();
+        String serializedGameGrid = jsonResponse.getBody().getObject().getString("serializedGameGrid");
+        String serializedEntityList = jsonResponse.getBody().getObject().getString("serializedEntityList");
 
-        String serializedGameGrid = jsonResponseStatus.getBody().getObject().getString("serializedGameGrid");
-        String serializedEntityList = jsonResponseStatus.getBody().getObject().getString("serializedEntityList");
         try {
             gameGrid = (GameGrid) Serializer.fromString(serializedGameGrid);
 
