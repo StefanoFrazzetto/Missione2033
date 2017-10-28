@@ -21,7 +21,13 @@ public class Player2Controller extends PlayerController {
 
     @Override
     protected EventHandler<KeyEvent> getKeyEventEventHandler() {
-        return null;
+        return event -> {
+            try {
+                ((Player2Model) model).openDoors(event.getText().charAt(0));
+            } catch (UnirestException e) {
+                System.err.println("ORCO DISCO");
+            }
+        };
     }
 
     @Override
@@ -30,7 +36,7 @@ public class Player2Controller extends PlayerController {
     }
 
     @Override
-    public int getRectSize(){
+    public int getRectSize() {
         return 15;
     }
 }
