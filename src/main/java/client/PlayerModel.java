@@ -38,14 +38,18 @@ public abstract class PlayerModel {
                 .header("accept", "application/json")
                 .asJson();
 
-        String serializedEntityList = jsonResponseStatus.getBody().getObject().getString("serializedEntityList");
-
-        //noinspection unchecked
-        entityList = (List<Entity>) Serializer.fromString(serializedEntityList);
+        updateEntityListFromJsonResponse(jsonResponseStatus);
 
         long endTime = System.currentTimeMillis();
 
         System.out.println(startTime - endTime + " ms to update entity list");
+    }
+
+    protected void updateEntityListFromJsonResponse(HttpResponse<JsonNode> jsonResponseStatus) throws UnirestException, IOException, ClassNotFoundException {
+        String serializedEntityList = jsonResponseStatus.getBody().getObject().getString("serializedEntityList");
+
+        //noinspection unchecked
+        entityList = (List<Entity>) Serializer.fromString(serializedEntityList);
     }
 
     public void initGame() throws UnirestException {

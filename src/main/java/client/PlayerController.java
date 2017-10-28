@@ -5,7 +5,6 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -23,7 +22,6 @@ public abstract class PlayerController {
     public static final Color CLOSED_DOOR_COLOR = Color.RED;
     public static final Color EXIT_COLOR = Color.ORANGE;
 
-    public static final int SIZE = 25;
     public GridPane gridPane;
 
     protected PlayerModel model;
@@ -57,14 +55,14 @@ public abstract class PlayerController {
 
 
             if (next == null) {
-                rect.setFill(Color.WHITE);
+                rect.setFill(FLOOR_COLOR);
             } else {
                 switch (next) {
                     case WALL:
-                        rect.setFill(Color.BLACK);
+                        rect.setFill(WALL_COLOR);
                         break;
                     case FLOOR:
-                        rect.setFill(Color.WHITE);
+                        rect.setFill(FLOOR_COLOR);
                         break;
                 }
             }
@@ -73,10 +71,10 @@ public abstract class PlayerController {
             gridPane.add(rect, y, x);
         }
 
-        if(showCharacters())
+
         for (Entity entity : model.entityList) {
             Node node = null;
-            Rectangle rect = new Rectangle(SIZE, SIZE);
+            Rectangle rect = new Rectangle(getRectSize(), getRectSize());
             rect.setFill(Color.RED);
 
             if (entity instanceof Door) {
@@ -96,15 +94,19 @@ public abstract class PlayerController {
                 rect.setFill(ENEMY_COLOR);
             } else if (entity instanceof Agent) {
                 ImagePattern imagePattern = new ImagePattern(image);
-                WritableImage wImage = new WritableImage(SIZE, SIZE);
+
                 rect.setFill(imagePattern);
             } else if (entity instanceof Exit) {
                 rect.setFill(EXIT_COLOR);
             }
 
             if (node == null) {
+                if(!showCharacters())
+                    continue;
+
                 node = rect;
             }
+
             gridPane.add(node, entity.getyCoordinate(), entity.getxCoordinate());
         }
 
