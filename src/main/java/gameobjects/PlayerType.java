@@ -1,6 +1,5 @@
 package gameobjects;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 /**
  * PlayerType
@@ -25,7 +24,7 @@ public enum PlayerType {
      * @return the player type associated with the string
      * @throws IllegalArgumentException if the string does not match any enum
      */
-    public static PlayerType fromString(String string) throws InvalidArgumentException {
+    public static PlayerType fromString(String string) throws IllegalArgumentException {
         for (PlayerType playerType : PlayerType.values()) {
             if (string.toLowerCase().equals(playerType.getType())) {
                 return playerType;

@@ -1,7 +1,5 @@
 package gameobjects;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.io.*;
 import java.util.List;
 import java.util.Objects;
@@ -88,9 +86,9 @@ public class GameEngine implements Serializable {
      * (this would avoid other players from intruding the game).
      *
      * @param playerTypeString the player type string
-     * @throws InvalidArgumentException if string does not match any player type
+     * @throws IllegalArgumentException if string does not match any player type
      */
-    public PlayerType handlePlayerInit(String playerTypeString) throws InvalidArgumentException {
+    public PlayerType handlePlayerInit(String playerTypeString) throws IllegalArgumentException {
         PlayerType playerType = PlayerType.fromString(playerTypeString);
 
         if (playerType == PlayerType.AGENT) {
