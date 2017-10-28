@@ -121,8 +121,6 @@ public class Level {
                 }
             } // END- String loop
         } // END - List loop
-
-        System.out.println(gameGrid);
     }
 
     public String toString() {
