@@ -1,0 +1,20 @@
+
+#menuGrid Button, #menuGrid TextField {
+    -fx-pref-width: 200px;
+    -fx-pref-height: 35px;
+}
+
+#menuGrid  HBox {
+    -fx-padding: 15px 40px;
+}
+
+#buttons {
+    -fx-padding: 0 20px;
+}
+
+.text-field {
+     -fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+ }
+.text-field:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+}

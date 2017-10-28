@@ -26,9 +26,14 @@ public class Player1App extends Application {
 
         Parent root = FXMLLoader.load(resource);
 
+        assert root != null;
+
         scene = new Scene(root);
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("GUTS 2017");
+
+        Player1App.primaryStage = primaryStage;
 
         primaryStage.show();
     }
