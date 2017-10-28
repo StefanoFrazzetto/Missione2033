@@ -1,11 +1,13 @@
 package gameobjects;
 
+import java.io.Serializable;
+
 /**
  * GameObject represents the objects in a game.
  * <p>
  * Each object has a symbol which is used to decode the save files.
  */
-public enum GameObject {
+public enum GameObject implements Serializable {
     WALL('W'),
     FLOOR(' '),
     PLAYER('P'),

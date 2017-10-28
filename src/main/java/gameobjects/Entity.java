@@ -1,6 +1,7 @@
 package gameobjects;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Entity
@@ -8,7 +9,7 @@ import java.awt.*;
  * @author stefano
  * @version 1.0.0
  */
-abstract class Entity {
+abstract class Entity implements Serializable {
 
     private int health;
 

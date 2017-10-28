@@ -1,13 +1,14 @@
 package gameobjects;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 
 /**
  * GameGrid class can be used to create a 2D grid containing GameObjects.
  */
-public class GameGrid implements Iterable {
+public class GameGrid implements Iterable, Serializable {
 
     /**
      * The number of columns
