@@ -30,7 +30,7 @@
         <HBox GridPane.rowIndex="0">
             <VBox>
                 <Text text="Server address" textAlignment="CENTER" />
-                <TextField promptText="Server Address" />
+                <TextField promptText="Server Address" fx:id="serverHostField" text="localhost:8080"/>
             </VBox>
         </HBox>
         <HBox GridPane.rowIndex="1">

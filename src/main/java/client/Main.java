@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
@@ -14,9 +15,16 @@ public class Main extends Application {
 
     private static Scene scene;
     private static Stage primaryStage;
+    private static String host = "localhost:8080";
+
+    public TextField serverHostField;
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static String getHost() {
+        return host;
     }
 
     @Override
@@ -44,14 +52,34 @@ public class Main extends Application {
         Main.primaryStage = primaryStage;
     }
 
+    private String loadHostName() {
+        serverHostField = (TextField) scene.lookup("#serverHostField");
+
+        assert serverHostField != null;
+
+        String host = "http://" + serverHostField.getText();
+
+        // TODO validation
+
+        Main.host = host;
+
+        return host;
+    }
+
     public void StartAsPlayerOne() {
+        loadHostName();
+
         Player1App app = new Player1App();
 
         app.start(primaryStage);
     }
 
     public void StartAsPlayerTwo() {
+        loadHostName();
 
+//        Player2App app = new Player2App();
+//
+//        app.start(primaryStage);
     }
 
     public void closeGame() {

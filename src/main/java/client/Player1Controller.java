@@ -1,5 +1,6 @@
 package client;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import gameobjects.Direction;
 import gameobjects.GameGrid;
 import gameobjects.GameObject;
@@ -13,7 +14,7 @@ public class Player1Controller {
     public GridPane gridPane;
     private Player1Model model;
 
-    public Player1Controller() {
+    public Player1Controller() throws UnirestException {
         model = new Player1Model();
         model.initGame();
     }

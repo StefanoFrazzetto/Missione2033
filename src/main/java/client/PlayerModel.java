@@ -1,5 +1,9 @@
 package client;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import gameobjects.GameGrid;
 import gameobjects.GameObject;
 
@@ -10,10 +14,22 @@ public abstract class PlayerModel {
         return gameGrid;
     }
 
-    public void initGame() {
+    public void initGame() throws UnirestException {
         // load the game grid async?
 
         // HERE WE SHOULD LOAD THE MAP
+
+        long startTime = System.currentTimeMillis();
+
+        HttpResponse<JsonNode> jsonResponse = Unirest.get(Main.getHost() + "/play")
+                .header("accept", "application/json")
+                .asJson();
+
+        long estimatedTime = System.currentTimeMillis() - startTime;
+
+        System.out.println(estimatedTime + " ms elapsed for the init request.");
+
+        System.out.println(jsonResponse.getBody().toString());
 
         // TEMP MODEL HERE
         gameGrid = new GameGrid(50, 50);
