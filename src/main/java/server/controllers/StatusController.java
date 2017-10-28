@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.Application;
 import server.responses.Status;
+import utils.Serializer;
 
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ public class StatusController {
         GameEngine gameEngine = Application.getEngine();
 
         try {
-            return new Status(gameEngine.getStatus(), gameEngine.serialize());
+            return new Status(gameEngine.getStatus(), Serializer.toString(gameEngine));
         } catch (IOException e) {
             e.printStackTrace();
             return new Status("ERROR", null);

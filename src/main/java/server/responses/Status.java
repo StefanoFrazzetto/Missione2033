@@ -1,7 +1,5 @@
 package server.responses;
 
-import java.io.ObjectOutputStream;
-
 /**
  * Status
  *
@@ -10,19 +8,21 @@ import java.io.ObjectOutputStream;
  */
 public class Status {
     private final String status;
-    private final ObjectOutputStream objectOutputStream;
+    private final String serializedEngine;
 
-    public Status(String status, ObjectOutputStream objectOutputStream) {
+    public Status(String status, String serializedEngine) {
         this.status = status;
-        this.objectOutputStream = objectOutputStream;
+        this.serializedEngine = serializedEngine;
 
+    }
+
+    public String getSerializedEngine() {
+        return serializedEngine;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public ObjectOutputStream getObjectOutputStream() {
-        return objectOutputStream;
-    }
+
 }
