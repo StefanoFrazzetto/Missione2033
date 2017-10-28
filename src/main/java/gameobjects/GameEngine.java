@@ -18,19 +18,19 @@ public class GameEngine implements Serializable {
     /**
      * The agent
      */
-    transient private Agent agent;
+    private Agent agent;
 
     /**
      * The current level
      */
-    transient private Level currentLevel;
+    private Level currentLevel;
 
     /**
      * The game status
      * <p>
      * TODO: migrate to enum
      */
-    transient private String status = "RUNNING";
+    private String status = "RUNNING";
 
     /**
      * The game grid containing the object

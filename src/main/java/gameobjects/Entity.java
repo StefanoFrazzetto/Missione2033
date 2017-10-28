@@ -1,7 +1,6 @@
 package gameobjects;
 
 import java.awt.*;
-import java.io.Serializable;
 
 /**
  * Entity
@@ -9,7 +8,7 @@ import java.io.Serializable;
  * @author stefano
  * @version 1.0.0
  */
-public class Entity implements Serializable {
+public class Entity {
     private int xCoordinate;
 
     private int yCoordinate;

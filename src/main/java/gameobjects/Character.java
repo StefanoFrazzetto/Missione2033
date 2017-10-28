@@ -1,15 +1,12 @@
 package gameobjects;
 
-import java.awt.*;
-import java.io.Serializable;
-
 /**
  * Character
  *
  * @author stefano
  * @version 1.0.0
  */
-abstract class Character extends Entity implements Serializable {
+abstract class Character extends Entity {
 
     private int health;
 

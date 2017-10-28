@@ -1,14 +1,12 @@
 package gameobjects;
 
-import java.io.Serializable;
-
 /**
  * Door
  *
  * @author stefano
  * @version 1.0.0
  */
-public class Door extends Entity implements Serializable {
+public class Door extends Entity {
 
     private boolean open;
 
