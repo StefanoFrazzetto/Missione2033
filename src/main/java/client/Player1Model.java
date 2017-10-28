@@ -1,5 +1,6 @@
 package client;
 
+import com.mashape.unirest.http.Unirest;
 import gameobjects.Direction;
 import javafx.geometry.Point2D;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class Player1Model extends PlayerModel {
     public void movePlayer(Direction direction) {
-        System.out.println(direction);
+        Unirest.get(String.format("%s/move?d=%s", Main.getHost(), direction.getCode())).asBinaryAsync();
     }
 
     public Point2D getPlayerPosition() {
