@@ -113,4 +113,19 @@ public class GameEngine implements Serializable {
         return status;
     }
 
+    public void openDoors(GameObject doorType) {
+        for (Entity entity : entityList) {
+            if (entity instanceof Door && ((Door) entity).getType() == doorType) {
+                ((Door) entity).open();
+            }
+        }
+    }
+
+    public void closeDoors(GameObject doorType) {
+        for (Entity entity : entityList) {
+            if (entity instanceof Door && ((Door) entity).getType() == doorType) {
+                ((Door) entity).close();
+            }
+        }
+    }
 }
