@@ -136,22 +136,18 @@ public class GameEngine implements Serializable {
     }
 
     public boolean isNodeFree(int x, int y) {
-        if (gameGrid.getGameObjectAt(x, y) != GameObject.FLOOR) {
+        if (gameGrid.getGameObjectAt(x, y) == GameObject.WALL)
             return false;
-        }
 
-        for (Entity collidable : entityList) {
-            if(collidable instanceof Agent)
-                return true; // magari in retromarcia
+        for (Entity entity : entityList) {
+            if(entity.getxCoordinate() == x && entity.getyCoordinate() == y && !(entity instanceof Agent)) {
 
-            if (collidable.getxCoordinate() == x && collidable.getyCoordinate() == y)
-                if (collidable instanceof Door) {
-                    Door door = (Door) collidable;
-
-                    return door.isOpen();
-
-                } else // ENEMY - EXIT
+                if (entity instanceof Door && !((Door) entity).isOpen()) {
                     return false;
+                }
+
+
+            }
         }
 
         return true;
@@ -199,7 +195,6 @@ public class GameEngine implements Serializable {
 //        Path solution = aStarPathFinder.findPath(new UnitMover(), 4, 4, 1, 1);
 
 
-
         for (Enemy enemy : enemies) {
             AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(this), 100000000, false);
             Path path = aStarPathFinder.findPath(
@@ -217,7 +212,6 @@ public class GameEngine implements Serializable {
             System.out.println("ENEMY");
             System.out.println(enemy.getxCoordinate());
             System.out.println(enemy.getyCoordinate());
-
 
 
             System.out.println("Move enemies 2 [FOR]");
