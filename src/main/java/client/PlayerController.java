@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 public abstract class PlayerController {
 
     private static final Image agent = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/boy.40x40.png"));
-    private static final Image enemy = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/enemy.png"));
+    private static final Image enemy = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/Enemy40x40.png"));
     private static final Image wall = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/walls/Brick.png"));
     private static final Image floor = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/floors/hardwood1.png"));
     //private static final Image door = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/floors/stairs.png"));
