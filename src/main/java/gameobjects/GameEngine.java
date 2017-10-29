@@ -1,7 +1,6 @@
 package gameobjects;
 
 import algorithms.*;
-import gameobjects.weapons.Weapon;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -49,7 +48,7 @@ public class GameEngine implements Serializable {
     }
 
     public void initializeGame() {
-        String filename = "StrangeLevel.txt";
+        String filename = "level1.txt";
         loadLevel(filename);
     }
 
@@ -112,8 +111,8 @@ public class GameEngine implements Serializable {
     }
 
     public void handleMovement(Direction direction) {
-        int x = agent.getxCoordinate();
-        int y = agent.getyCoordinate();
+        int x = agent.getRow();
+        int y = agent.getColumn();
 
         switch (direction) {
             case NORTH:
@@ -141,7 +140,7 @@ public class GameEngine implements Serializable {
             return false;
 
         for (Entity entity : entityList) {
-            if (entity.getxCoordinate() == x && entity.getyCoordinate() == y && !(entity instanceof Agent)) {
+            if (entity.getRow() == x && entity.getColumn() == y && !(entity instanceof Agent)) {
 
                 if (entity instanceof Door && !((Door) entity).isOpen()) {
                     return false;
@@ -195,10 +194,10 @@ public class GameEngine implements Serializable {
             AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(this), 500, false);
             Path path = aStarPathFinder.findPath(
                     new UnitMover(),
-                    enemy.getxCoordinate(),
-                    enemy.getyCoordinate(),
-                    agent.getxCoordinate(),
-                    agent.getyCoordinate()
+                    enemy.getRow(),
+                    enemy.getColumn(),
+                    agent.getRow(),
+                    agent.getColumn()
             );
 
             if (path != null) {
@@ -209,21 +208,18 @@ public class GameEngine implements Serializable {
     }
 
     public void attack(Character attacker, Direction direction) {
-
-        Weapon agentWeapon = agent.getWeapon();
-
-        int distance = 0;
         Character victim = null;
 
         switch (direction) {
             case WEST:
                 for (Entity entity : entityList) {
-                    if (entity.getyCoordinate() == attacker.getyCoordinate()) {
-                        for (int i = attacker.getxCoordinate(); i > 0; i--) {
-                            if (entity.getxCoordinate() == i) {
-                                victim = (Character) entityList;
-                                distance = attacker.getxCoordinate() - victim.getxCoordinate();
+                    if (entity instanceof Character) {
+                        if (entity.getRow() == attacker.getRow()) {
+                            if (entity.getColumn() < attacker.getColumn()) {
+                                victim = (Character) entity;
+                                break;
                             }
+
                         }
                     }
                 }
@@ -231,11 +227,11 @@ public class GameEngine implements Serializable {
 
             case EAST:
                 for (Entity entity : entityList) {
-                    if (entity.getyCoordinate() == attacker.getyCoordinate()) {
-                        for (int i = attacker.getxCoordinate(); i < gameGrid.getDimension().getWidth(); i++) {
-                            if (entity.getxCoordinate() == i) {
+                    if (entity instanceof Character) {
+                        if (entity.getRow() == attacker.getRow()) {
+                            if (entity.getColumn() > attacker.getColumn()) {
                                 victim = (Character) entity;
-                                distance = victim.getxCoordinate() - attacker.getxCoordinate();
+                                break;
                             }
                         }
                     }
@@ -244,11 +240,11 @@ public class GameEngine implements Serializable {
 
             case NORTH:
                 for (Entity entity : entityList) {
-                    if (entity.getxCoordinate() == attacker.getxCoordinate()) {
-                        for (int i = attacker.getyCoordinate(); i > 0; i--) {
-                            if (entity.getyCoordinate() == i) {
+                    if (entity instanceof Character) {
+                        if (entity.getColumn() == attacker.getColumn()) {
+                            if (entity.getRow() < attacker.getRow()) {
                                 victim = (Character) entity;
-                                distance = attacker.getyCoordinate() - victim.getyCoordinate();
+                                break;
                             }
                         }
                     }
@@ -257,11 +253,11 @@ public class GameEngine implements Serializable {
 
             case SOUTH:
                 for (Entity entity : entityList) {
-                    if (entity.getxCoordinate() == attacker.getxCoordinate()) {
-                        for (int i = attacker.getyCoordinate(); i < gameGrid.getDimension().getHeight(); i++) {
-                            if (entity.getxCoordinate() == i) {
+                    if (entity instanceof Character) {
+                        if (entity.getColumn() == attacker.getColumn()) {
+                            if (entity.getRow() > attacker.getRow()) {
                                 victim = (Character) entity;
-                                distance = victim.getyCoordinate() - attacker.getyCoordinate();
+                                break;
                             }
                         }
                     }
@@ -280,10 +276,13 @@ public class GameEngine implements Serializable {
 
                 if (victim instanceof Enemy) {
                     System.out.println("You KILLED AN ENEMY!");
-                    victim = null;
+                    entityList.remove(victim);
                 }
             }
         }
+
+        // Let's move the enemies
+        moveEnemies();
 
     }
 
