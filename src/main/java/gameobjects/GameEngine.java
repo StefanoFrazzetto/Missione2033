@@ -48,7 +48,7 @@ public class GameEngine implements Serializable {
     }
 
     public void initializeGame() {
-        String filename = "Levels/testlevel.txt";
+        String filename = "Levels/MansionLevel.txt";
         loadLevel(filename);
     }
 
@@ -146,7 +146,9 @@ public class GameEngine implements Serializable {
                     return false;
                 }
 
-
+                if (entity instanceof Character) {
+                    return false;
+                }
             }
         }
 
@@ -209,60 +211,130 @@ public class GameEngine implements Serializable {
 
     public void attack(Character attacker, Direction direction) {
         Character victim = null;
+        ArrayList<Character> possibleTargets = new ArrayList<>();
+        int attackerRow = attacker.getRow();
+        int attackerColumn = attacker.getColumn();
 
+        // if free
+        // continue
+        // else
+        // if target
+        // shoot
+        // else
+        // break
         switch (direction) {
             case WEST:
-                for (Entity entity : entityList) {
-                    if (entity instanceof Character) {
-                        if (entity.getRow() == attacker.getRow()) {
-                            if (entity.getColumn() < attacker.getColumn()) {
-                                victim = (Character) entity;
-                                break;
-                            }
-
-                        }
-                    }
-                }
-                break;
-
             case EAST:
                 for (Entity entity : entityList) {
                     if (entity instanceof Character) {
                         if (entity.getRow() == attacker.getRow()) {
-                            if (entity.getColumn() > attacker.getColumn()) {
-                                victim = (Character) entity;
-                                break;
-                            }
+                            possibleTargets.add((Character) entity);
                         }
                     }
                 }
+
+                // Get the maximum distance for the weapon
+                if (direction == Direction.EAST) {
+                    int maxReachableColumn = attacker.getColumn() + attacker.getWeapon().getRange();
+                    if (maxReachableColumn > gameGrid.getDimension().getWidth()) {
+                        maxReachableColumn = (int) gameGrid.getDimension().getWidth();
+                    }
+
+                    for (int i = attacker.getColumn() + 1; i < maxReachableColumn; i++) {
+                        if (isNodeFree(attackerRow, i)) {
+                            continue;
+                        } else {
+                            for (Character character : possibleTargets) {
+                                if (character.getColumn() == i) {
+                                    victim = character;
+                                    break;
+                                }
+                            }
+
+                            // Is a WALL or a CLOSED DOOR
+                            break;
+                        }
+                    }
+                } else { // WEST
+                    int maxReachableColumn = attacker.getColumn() - attacker.getWeapon().getRange();
+                    if (maxReachableColumn < 0) {
+                        maxReachableColumn = 0;
+                    }
+
+                    for (int i = attacker.getColumn() - 1; i > maxReachableColumn; i--) {
+                        if (isNodeFree(attackerRow, i)) {
+                            continue;
+                        } else {
+                            for (Character character : possibleTargets) {
+                                if (character.getColumn() == i) {
+                                    victim = character;
+                                    break;
+                                }
+                            }
+
+                            // Is a WALL or a CLOSED DOOR
+                            break;
+                        }
+                    }
+                }
+
+
                 break;
 
             case NORTH:
-                for (Entity entity : entityList) {
-                    if (entity instanceof Character) {
-                        if (entity.getColumn() == attacker.getColumn()) {
-                            if (entity.getRow() < attacker.getRow()) {
-                                victim = (Character) entity;
-                                break;
-                            }
-                        }
-                    }
-                }
-                break;
-
             case SOUTH:
                 for (Entity entity : entityList) {
                     if (entity instanceof Character) {
                         if (entity.getColumn() == attacker.getColumn()) {
-                            if (entity.getRow() > attacker.getRow()) {
-                                victim = (Character) entity;
-                                break;
-                            }
+                            possibleTargets.add((Character) entity);
                         }
                     }
                 }
-                break;
+
+                // Get the maximum distance for the weapon
+                if (direction == Direction.NORTH) {
+                    int maxReachableRow = attacker.getRow() - attacker.getWeapon().getRange();
+                    if (maxReachableRow < 0) {
+                        maxReachableRow = 0;
+                    }
+
+                    for (int i = attacker.getRow() - 1; i > maxReachableRow; i--) {
+                        if (isNodeFree(i, attackerColumn)) {
+                            continue;
+                        } else {
+                            for (Character character : possibleTargets) {
+                                if (character.getRow() == i) {
+                                    victim = character;
+                                    break;
+                                }
+                            }
+
+                            // Is a WALL or a CLOSED DOOR
+                            break;
+                        }
+                    }
+                } else { // WEST
+                    int maxReachableRow = attacker.getRow() + attacker.getWeapon().getRange();
+                    if (maxReachableRow > gameGrid.getDimension().getHeight()) {
+                        maxReachableRow = (int) gameGrid.getDimension().getHeight();
+                    }
+
+                    for (int i = attacker.getRow() + 1; i < maxReachableRow; i++) {
+                        if (isNodeFree(i, attackerColumn)) {
+                            continue;
+                        } else {
+                            for (Character character : possibleTargets) {
+                                if (character.getRow() == i) {
+                                    victim = character;
+                                    break;
+                                }
+                            }
+
+                            // Is a WALL or a CLOSED DOOR
+                            break;
+                        }
+                    }
+                }
         }
 
         // Check that there is a victim (target) and it's in range
@@ -285,7 +357,7 @@ public class GameEngine implements Serializable {
         System.out.println("Victim: " + victim);
 
         // Let's move the enemies
-        moveEnemies();
+//        moveEnemies();
 
     }
 
