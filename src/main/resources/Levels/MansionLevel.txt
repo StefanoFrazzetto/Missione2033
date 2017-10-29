@@ -14,7 +14,7 @@ ww      w       w    w       w.......w             w      w      w         w
 ww      w       w    wwwwPwwww.......wwwwwwwwwRwwwww      w      w         w
 ww      w       w          w...............w              w H  H w         w
 ww      w       w        www...............w              wHHHHH w         w
-ww      w       w        w................ www            wHHHHHHw         w
+ww      w       w        w.................www            wHHHHHHw         w
 wwwwXXwwwwwwSwwwwwwwwwwwww...................wwwwwwwwwwwwwwwwwwwwwwwwwSwwwww
 w               w.......................................w                  w
 w               w.......................................w                  w

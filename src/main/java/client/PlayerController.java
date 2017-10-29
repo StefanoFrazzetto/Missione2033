@@ -22,11 +22,13 @@ public abstract class PlayerController {
     private static final Image floor = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/floors/hardwood1.png"));
     //private static final Image door = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/floors/stairs.png"));
     private static final Image exit = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/blueprint/decalExit.png"));
+    private static final Image grass = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/floors/grasslong.png"));
 
     private static final Paint OPEN_DOOR_COLOR = Color.TRANSPARENT;
     private static final Paint CLOSED_DOOR_COLOR = Color.RED;
 
     private static final Paint FLOOR_COLOR = new ImagePattern(floor);//Color.WHITE;
+    private static final Paint GRASS_COLOR = new ImagePattern(grass);//Color.WHITE;
     private static final Paint WALL_COLOR = new ImagePattern(wall);
     private static final Paint EXIT_COLOR = new ImagePattern(exit);//Color.WHITE;
 
@@ -85,6 +87,9 @@ public abstract class PlayerController {
                         break;
                     case FLOOR:
                         rect.setFill(FLOOR_COLOR);
+                        break;
+                    case GRASS:
+                        rect.setFill(GRASS_COLOR);
                         break;
                 }
             }
