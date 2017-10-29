@@ -31,7 +31,7 @@ public class GameEngine implements Serializable {
      * <p>
      * TODO: migrate to enum
      */
-    private String status = "RUNNING";
+    private GameStatus gameStatus;
 
     /**
      * The game grid containing the object
@@ -50,6 +50,34 @@ public class GameEngine implements Serializable {
     public void initializeGame() {
         String filename = "Levels/MansionLevel.txt";
         loadLevel(filename);
+        setGameStatus(GameStatus.RUNNING);
+    }
+
+    private void checkGameStatus() {
+        for (Entity entity : entityList) {
+            if (entity instanceof Enemy) {
+                if (entity.getDistance(agent) == 0) {
+                    setGameStatus(GameStatus.GAME_OVER);
+                }
+            }
+
+            if (entity instanceof Exit) {
+                if (entity.getDistance(agent) == 0) {
+                    setGameStatus(GameStatus.VICTORY);
+                }
+            }
+        }
+    }
+
+    /**
+     * @return the game status
+     */
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    private void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
     }
 
     /**
@@ -133,6 +161,9 @@ public class GameEngine implements Serializable {
             agent.setCoordinates(x, y);
             moveEnemies();
         }
+
+        // Check the game status
+        checkGameStatus();
     }
 
     public boolean isNodeFree(int x, int y) {
@@ -373,10 +404,6 @@ public class GameEngine implements Serializable {
      */
     private void initAgent() {
         this.agent = new Agent();
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     /**

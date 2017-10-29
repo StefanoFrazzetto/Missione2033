@@ -3,6 +3,8 @@ package gameobjects;
 import java.awt.*;
 import java.io.Serializable;
 
+import static java.lang.Math.round;
+
 /**
  * Entity
  *
@@ -25,6 +27,11 @@ public class Entity implements Serializable {
 
     public int getColumn() {
         return column;
+    }
+
+    public int getDistance(Entity entity) {
+        return (int) round(Math.sqrt(Math.pow(entity.getRow() - this.getRow(), 2) +
+                Math.pow(entity.getColumn() - this.getColumn(), 2)));
     }
 
     public Point getCoordinates() {

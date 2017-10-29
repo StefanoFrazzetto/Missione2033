@@ -2,8 +2,6 @@ package gameobjects;
 
 import gameobjects.weapons.Weapon;
 
-import static java.lang.Math.round;
-
 /**
  * Character
  *
@@ -53,11 +51,6 @@ public abstract class Character extends Entity {
 
     public Weapon getWeapon() {
         return weapon;
-    }
-
-    public int getDistance(Character character) {
-        return (int) round(Math.sqrt(Math.pow(character.getRow() - this.getRow(), 2) +
-                Math.pow(character.getColumn() - this.getColumn(), 2)));
     }
 
     public int getStrength() {

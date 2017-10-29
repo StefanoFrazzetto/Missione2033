@@ -18,14 +18,14 @@ public class Status {
     private final String serializedEntityList;
 
     public static Status fromGameEngine(GameEngine gameEngine) {
-        String status = "error";
+        String status = "Unknown status";
         String gameGrid = null;
         String entityList = null;
 
         try {
             gameGrid = Serializer.toString(gameEngine.getGameGrid());
             entityList = Serializer.toString((Serializable) gameEngine.getEntityList());
-            status = gameEngine.getStatus();
+            status = gameEngine.getGameStatus().getString();
         } catch (IOException e) {
             e.printStackTrace();
         }
