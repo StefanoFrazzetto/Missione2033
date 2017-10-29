@@ -10,8 +10,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyEvent;
 
-import java.io.IOException;
-
 public class Player1Controller extends PlayerController {
     public Player1Controller() throws UnirestException {
         Platform.runLater(() -> {
@@ -29,34 +27,45 @@ public class Player1Controller extends PlayerController {
     protected EventHandler<KeyEvent> getKeyEventEventHandler() {
         return event -> {
             Direction d = null;
+            Player1Model model = (Player1Model) this.model;
+
 
             switch (event.getText().toUpperCase()) {
+
+                // Move
                 case "W":
-                    d = Direction.NORTH;
+                    model.movePlayerSync(Direction.WEST, null);
                     break;
                 case "S":
-                    d = Direction.SOUTH;
+                    model.movePlayerSync(Direction.SOUTH, null);
                     break;
                 case "D":
-                    d = Direction.EAST;
+                    model.movePlayerSync(Direction.EAST, null);
                     break;
                 case "A":
-                    d = Direction.WEST;
+                    model.movePlayerSync(Direction.WEST, null);
                     break;
+
+                // Shoot
+                case "RIGHT":
+                    model.shootSync(Direction.EAST);
+                    break;
+                case "LEFT":
+                    model.shootSync(Direction.WEST);
+                    break;
+                case "UP":
+                    model.shootSync(Direction.NORTH);
+                    break;
+                case "DOWN":
+                    model.shootSync(Direction.SOUTH);
+                    break;
+
+
                 default:
                     System.out.printf("[%s]%n", event.getCode());
             }
 
-            if (d != null)
-                ((Player1Model) model).movePlayerSync(d, () -> {
-                    try {
-                        model.updateEntityList();
-                    } catch (UnirestException | ClassNotFoundException | IOException e) {
-                        e.printStackTrace();
-                    } finally {
-                        draw();
-                    }
-                });
+            draw();
         };
     }
 

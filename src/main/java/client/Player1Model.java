@@ -9,6 +9,7 @@ import gameobjects.Direction;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Player1Model extends PlayerModel {
@@ -42,8 +43,10 @@ public class Player1Model extends PlayerModel {
         long startTime = System.currentTimeMillis();
 
         try {
-            Unirest.get(String.format("%s/play/move?d=%s", Main.getHost(), direction.getCode())).asBinary();
-        } catch (UnirestException e) {
+            HttpResponse<JsonNode> response = Unirest.get(String.format("%s/play/move?d=%s", Main.getHost(), direction.getCode())).asJson();
+
+            this.updateEntityListFromJsonResponse(response);
+        } catch (UnirestException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -52,6 +55,16 @@ public class Player1Model extends PlayerModel {
         System.out.println(estimatedTime + " ms to send the control.");
 
         Platform.runLater(callback);
+    }
+
+    public void shootSync(Direction direction){
+        try {
+            HttpResponse<JsonNode> response = Unirest.get(String.format("%s/action/attack?direction=%s", Main.getHost(), direction.getCode())).asJson();
+
+            this.updateEntityListFromJsonResponse(response);
+        } catch (UnirestException | IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public Point2D getPlayerPosition() {
