@@ -21,22 +21,23 @@ public class RoomFindingAlgorithm {
 
         // GOES UP 'N  DOWN
 
-        for (; !isBoundary(grid, entities, x, y); y--) ;
+        for (; !isBoundary(grid, entities, x, y); y--) if (y <= 0) break;
+
         miny = y;
         y = starty;
 
 
-        for (; !isBoundary(grid, entities, x, y); y++) ;
+        for (; !isBoundary(grid, entities, x, y); y++) if (y >= grid.ROWS - 1) break;
         maxy = y;
         y = starty;
 
         // GOES RIGHT AND LEFT
 
-        for (; !isBoundary(grid, entities, x, y); x++) ;
+        for (; !isBoundary(grid, entities, x, y); x++) if (x >= grid.COLUMNS - 1) break;
         maxx = x;
         x = startx;
 
-        for (; !isBoundary(grid, entities, x, y); x--) ;
+        for (; !isBoundary(grid, entities, x, y); x--) if (y <= 0) break;
         minx = x;
 
         return new Rectangle2D(minx, miny, maxx - minx, maxy - miny);

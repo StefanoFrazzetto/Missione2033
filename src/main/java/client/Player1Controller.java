@@ -34,7 +34,7 @@ public class Player1Controller extends PlayerController {
 
                 // Move
                 case "W":
-                    model.movePlayerSync(Direction.WEST, null);
+                    model.movePlayerSync(Direction.NORTH, null);
                     break;
                 case "S":
                     model.movePlayerSync(Direction.SOUTH, null);
