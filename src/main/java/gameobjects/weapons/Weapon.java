@@ -2,13 +2,15 @@ package gameobjects.weapons;
 
 import gameobjects.Character;
 
+import java.io.Serializable;
+
 /**
  * Weapon
  *
  * @author stefano
  * @version 1.0.0
  */
-abstract public class Weapon {
+abstract public class Weapon implements Serializable {
 
     private String name;
 
