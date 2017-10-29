@@ -1,20 +1,19 @@
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 w          w           w          w H H H H  w                               w
-w A        w           R          w          w                               w 
+w          w           R          w          w                               w
 w          O           w          S          w                               w
-w          wwwwwwwwwwwww          w          w                               w
-w          w         H w H H      w          w                               w
+w   A      wwwwwwwwwwwww          w          w                               w
+w          w          Hw H H      w          w                               w
 w          P           w      H   wwwwwwwXwwww                               w
-wwwwwwwwwwww         H w          w          w                               w     
-w H        w           wwwwwTwwwwww          w                               w 
-w          S         H X          O          w                               w
+wwwwwwwwwwww           w          w          w                               w
+w H        w           wwwwwTwwwwww          w                               w
+w          S           X          O          w                               w
 w          w           w          w          w                               w
 wwwwwTTwwwwwwwwwTwwwwwwwwwwwwPwwwwwwwwwTwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-w          w           w          w              w     H H H H H H           w
+w          w           w          w              w         H H H             w
 w          w           w          w              w                           w
 w          wwwwwXwwwwwOwwwwwwwwwXwwwwww          R                           w
-w          O       w                  w H        w                           w
+w          O       w                  w          w                           w
 w          w       w                  w          w                           Q
 w          w       w                  w H H H    w                           w
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-            
