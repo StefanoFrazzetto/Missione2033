@@ -208,7 +208,7 @@ public class GameEngine implements Serializable {
         }
     }
 
-    private void attack(Character attacker, Direction direction) {
+    public void attack(Character attacker, Direction direction) {
 
         Weapon agentWeapon = agent.getWeapon();
 
@@ -221,7 +221,7 @@ public class GameEngine implements Serializable {
                     if (entity.getyCoordinate() == attacker.getyCoordinate()) {
                         for (int i = attacker.getxCoordinate(); i > 0; i--) {
                             if (entity.getxCoordinate() == i) {
-                                victim = (Character) entity;
+                                victim = (Character) entityList;
                                 distance = attacker.getxCoordinate() - victim.getxCoordinate();
                             }
                         }
@@ -285,6 +285,13 @@ public class GameEngine implements Serializable {
             }
         }
 
+    }
+
+    /**
+     * @return the agent
+     */
+    public Agent getAgent() {
+        return agent;
     }
 
     /**
