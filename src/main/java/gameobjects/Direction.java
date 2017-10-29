@@ -31,8 +31,8 @@ public enum Direction {
 
         NORTH.code = 'N';
         SOUTH.code = 'S';
-        EAST.code = 'W';
-        WEST.code = 'E';
+        EAST.code = 'E';
+        WEST.code = 'W';
     }
 
     private Direction opposite;
