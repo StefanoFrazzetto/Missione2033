@@ -10,23 +10,31 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public abstract class PlayerController {
 
-    public static final Color ENEMY_COLOR = Color.PURPLE;
-    public static final Color WALL_COLOR = Color.BLACK;
-    public static final Color FLOOR_COLOR = Color.WHITE;
-    public static final Color OPEN_DOOR_COLOR = Color.GREEN;
-    public static final Color CLOSED_DOOR_COLOR = Color.RED;
-    public static final Color EXIT_COLOR = Color.ORANGE;
+    private static final Image agent = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/boy.40x40.png"));
+    private static final Image enemy = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/enemy.png"));
+    private static final Image wall = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/walls/Brick.png"));
+    private static final Image floor = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/floors/hardwood1.png"));
+    //private static final Image door = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/floors/stairs.png"));
+    private static final Image exit = new Image(PlayerController.class.getClassLoader().getResourceAsStream("Textures/maps/blueprint/decalExit.png"));
+
+    private static final Paint OPEN_DOOR_COLOR = Color.TRANSPARENT;
+    private static final Paint CLOSED_DOOR_COLOR = Color.RED;
+
+    private static final Paint FLOOR_COLOR = new ImagePattern(floor);//Color.WHITE;
+    private static final Paint WALL_COLOR = new ImagePattern(wall);
+    private static final Paint EXIT_COLOR = new ImagePattern(exit);//Color.WHITE;
+
+    private static final Paint ENEMY_COLOR = new ImagePattern(enemy);
 
     public GridPane gridPane;
 
     protected PlayerModel model;
-
-    private Image image = new Image(getClass().getClassLoader().getResourceAsStream("boy.png"));
 
     public void initialize() {
         System.out.printf("%s is initialising...%n", getClass().getName());
@@ -113,12 +121,22 @@ public abstract class PlayerController {
                 StackPane stack = new StackPane();
                 stack.getChildren().add(rect);
                 stack.getChildren().add(text);
+
+                try {
+                    if (model.gameGrid.getGameObjectAt(x + 1, y) != GameObject.FLOOR)
+                        rect.setWidth(getRectSize() / 2);
+                    else
+                        rect.setHeight(getRectSize() / 2);
+                } finally {
+                    // NON  FACEMO UNA MINGHIA
+                }
+
                 node = stack;
 
             } else if (entity instanceof Enemy) {
                 rect.setFill(ENEMY_COLOR);
             } else if (entity instanceof Agent) {
-                ImagePattern imagePattern = new ImagePattern(image);
+                ImagePattern imagePattern = new ImagePattern(agent);
 
                 rect.setFill(imagePattern);
             } else if (entity instanceof Exit) {
