@@ -1,5 +1,8 @@
 package gameobjects;
 
+import gameobjects.weapons.Shotgun;
+import gameobjects.weapons.Weapon;
+
 /**
  * Agent
  *
@@ -19,5 +22,7 @@ public class Agent extends Character {
      */
     public Agent() {
         super(DEFAULT_PLAYER_HEALTH, DEFAULT_PLAYER_STRENGTH);
+        Weapon weapon = new Shotgun();
+        this.equipWeapon(weapon);
     }
 }
