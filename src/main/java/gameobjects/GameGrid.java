@@ -13,11 +13,11 @@ public class GameGrid implements Iterable, Serializable {
     /**
      * The number of columns
      */
-    private final int COLUMNS;
+    public final int COLUMNS;
     /**
      * The number of rows
      */
-    private final int ROWS;
+    public final int ROWS;
 
     /**
      * The grid containing every GameObject

@@ -43,16 +43,30 @@ public abstract class PlayerController {
     protected abstract boolean showCharacters();
 
     public void draw() {
+        draw(0, 0, model.gameGrid.COLUMNS, model.gameGrid.ROWS);
+    }
+
+    public void draw(int minx, int miny, int maxwidth, int maxheight) {
+        gridPane.getChildren().clear();
+
         GameGrid.GridIterator iterator = (GameGrid.GridIterator) model.getGameGrid().iterator();
 
-
         while (iterator.hasNext()) {
+
             GameObject next = iterator.next();
             Rectangle rect = new Rectangle(getRectSize(), getRectSize());
 
             int x = iterator.getColumn();
             int y = iterator.getRow();
 
+            if (x < minx)
+                continue;
+            if (x > minx + maxwidth)
+                continue;
+            if (y < miny)
+                continue;
+            if (y > miny + maxheight)
+                continue;
 
             if (next == null) {
                 rect.setFill(FLOOR_COLOR);
@@ -71,11 +85,22 @@ public abstract class PlayerController {
             gridPane.add(rect, y, x);
         }
 
-
         for (Entity entity : model.entityList) {
             Node node = null;
             Rectangle rect = new Rectangle(getRectSize(), getRectSize());
             rect.setFill(Color.RED);
+
+            int x = entity.getxCoordinate();
+            int y = entity.getyCoordinate();
+
+            if (x < minx)
+                continue;
+            if (x > minx + maxwidth)
+                continue;
+            if (y < miny)
+                continue;
+            if (y > miny + maxheight)
+                continue;
 
             if (entity instanceof Door) {
                 if (((Door) entity).isOpen()) {
@@ -101,7 +126,7 @@ public abstract class PlayerController {
             }
 
             if (node == null) {
-                if(!showCharacters())
+                if (!showCharacters())
                     continue;
 
                 node = rect;
@@ -114,6 +139,6 @@ public abstract class PlayerController {
     }
 
     protected int getRectSize() {
-        return 25;
+        return 40;
     }
 }

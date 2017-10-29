@@ -1,9 +1,13 @@
 package client;
 
+import algorithms.RoomFindingAlgorithm;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import gameobjects.Agent;
 import gameobjects.Direction;
+import gameobjects.Entity;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
@@ -59,6 +63,22 @@ public class Player1Controller extends PlayerController {
     @Override
     protected boolean showCharacters() {
         return true;
+    }
+
+    @Override
+    public void draw() {
+        Agent agent = null;
+
+        for (Entity ent : model.entityList) {
+            if (ent instanceof Agent)
+                agent = (Agent) ent;
+        }
+
+        assert agent != null;
+
+        Rectangle2D rectangleRoom = RoomFindingAlgorithm.findRectangleRoom(model.gameGrid, model.entityList, agent.getxCoordinate(), agent.getyCoordinate());
+
+        super.draw((int) rectangleRoom.getMinX(), (int) rectangleRoom.getMinY(), (int) rectangleRoom.getWidth(), (int) rectangleRoom.getHeight());
     }
 
 }
