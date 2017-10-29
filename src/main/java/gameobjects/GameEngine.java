@@ -48,7 +48,7 @@ public class GameEngine implements Serializable {
     }
 
     public void initializeGame() {
-        String filename = "level1.txt";
+        String filename = "Levels/MansionLevel.txt";
         loadLevel(filename);
     }
 
