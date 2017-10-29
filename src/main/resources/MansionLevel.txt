@@ -1,9 +1,9 @@
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-        w            w   H H  H                    w H H H H H H   w
-        w  HHH HH H  w                             w               w   
-        w HHHHHHHH   w                             w               w 
-        w            w                             wwwwwwwTwwwwwwwwwwwwwwwww
-wwwwwwwww            w                             w   H H   H             w   
+w       w            w   H H  H                    w H H H H H H           w
+w       w  H    H H  w                             w                       w
+w       w        H   w                             w                       w
+w       w   H        w                             wwwwwwwTwwwwwwwwwwwwwwwww
+wwwwwwwww     H  H   w                             w   H H   H             w
 ww      w            wwwwOwwwwwwwwwwwwwwwwwwwXwwwwww               H       w
 ww A    w            w       w          H          w                       w          
 ww      wwwOwwwwwwwwww       w                     w                       w                                          
@@ -24,4 +24,4 @@ w               w                                       w                  w
 w               w                                       w                  w        
 w   H  H  H     w                                       w                  w        
 w               w                                       w                  w      
-wwwwwwwwwwwwwwwww                                       wwwwwwwwwwwwwwwQwwww       
+wwwwwwwwwwwwwwwww                                       wwwwwwwwwwwwwwwQwwww
