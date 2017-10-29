@@ -56,8 +56,8 @@ public abstract class Character extends Entity {
     }
 
     public int getDistance(Character character) {
-        return (int) round(Math.sqrt(Math.pow(character.getxCoordinate() - this.getxCoordinate(), 2) +
-                Math.pow(character.getyCoordinate() - this.getyCoordinate(), 2)));
+        return (int) round(Math.sqrt(Math.pow(character.getRow() - this.getRow(), 2) +
+                Math.pow(character.getColumn() - this.getColumn(), 2)));
     }
 
     public int getStrength() {

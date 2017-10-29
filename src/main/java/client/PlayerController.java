@@ -90,8 +90,8 @@ public abstract class PlayerController {
             Rectangle rect = new Rectangle(getRectSize(), getRectSize());
             rect.setFill(Color.RED);
 
-            int x = entity.getxCoordinate();
-            int y = entity.getyCoordinate();
+            int x = entity.getRow();
+            int y = entity.getColumn();
 
             if (x < minx)
                 continue;
@@ -132,7 +132,7 @@ public abstract class PlayerController {
                 node = rect;
             }
 
-            gridPane.add(node, entity.getyCoordinate(), entity.getxCoordinate());
+            gridPane.add(node, entity.getColumn(), entity.getRow());
         }
 
         gridPane.getScene().getWindow().sizeToScene();

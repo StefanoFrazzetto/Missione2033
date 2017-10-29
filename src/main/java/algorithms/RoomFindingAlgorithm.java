@@ -59,7 +59,7 @@ public class RoomFindingAlgorithm {
     private static boolean isThereADoorAt(List<Entity> entities, int x, int y) {
         for (Entity entity : entities)
             if (entity instanceof Door) {
-                if (entity.getxCoordinate() == x && entity.getyCoordinate() == y)
+                if (entity.getRow() == x && entity.getColumn() == y)
                     return !(((Door) entity).isOpen());
             }
 

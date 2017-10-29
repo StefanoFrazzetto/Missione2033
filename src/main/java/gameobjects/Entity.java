@@ -10,24 +10,24 @@ import java.io.Serializable;
  * @version 1.0.0
  */
 public class Entity implements Serializable {
-    private int xCoordinate;
+    private int row;
 
-    private int yCoordinate;
+    private int column;
 
     public void setCoordinates(int x, int y) {
-        this.xCoordinate = x;
-        this.yCoordinate = y;
+        this.row = x;
+        this.column = y;
     }
 
-    public int getxCoordinate() {
-        return xCoordinate;
+    public int getRow() {
+        return row;
     }
 
-    public int getyCoordinate() {
-        return yCoordinate;
+    public int getColumn() {
+        return column;
     }
 
     public Point getCoordinates() {
-        return new Point(xCoordinate, yCoordinate);
+        return new Point(row, column);
     }
 }
