@@ -1,6 +1,7 @@
 package gameobjects;
 
 import algorithms.*;
+import gameobjects.weapons.Weapon;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -48,7 +49,7 @@ public class GameEngine implements Serializable {
     }
 
     public void initializeGame() {
-        String filename = "level1.txt";
+        String filename = "StrangeLevel.txt";
         loadLevel(filename);
     }
 
@@ -140,7 +141,7 @@ public class GameEngine implements Serializable {
             return false;
 
         for (Entity entity : entityList) {
-            if(entity.getxCoordinate() == x && entity.getyCoordinate() == y && !(entity instanceof Agent)) {
+            if (entity.getxCoordinate() == x && entity.getyCoordinate() == y && !(entity instanceof Agent)) {
 
                 if (entity instanceof Door && !((Door) entity).isOpen()) {
                     return false;
@@ -190,13 +191,8 @@ public class GameEngine implements Serializable {
     private void moveEnemies() {
         List<Enemy> enemies = getEnemies();
 
-
-//        AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(), 500, false);
-//        Path solution = aStarPathFinder.findPath(new UnitMover(), 4, 4, 1, 1);
-
-
         for (Enemy enemy : enemies) {
-            AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(this), 100000000, false);
+            AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(this), 500, false);
             Path path = aStarPathFinder.findPath(
                     new UnitMover(),
                     enemy.getxCoordinate(),
@@ -205,23 +201,90 @@ public class GameEngine implements Serializable {
                     agent.getyCoordinate()
             );
 
-            System.out.println("AGENT");
-            System.out.println(agent.getxCoordinate());
-            System.out.println(agent.getyCoordinate());
-
-            System.out.println("ENEMY");
-            System.out.println(enemy.getxCoordinate());
-            System.out.println(enemy.getyCoordinate());
-
-
-            System.out.println("Move enemies 2 [FOR]");
-
             if (path != null) {
                 Path.Step step = path.getStep(1);
                 enemy.setCoordinates(step.getX(), step.getY());
-                System.out.println("Move enemies 3 [Move the enemy!]");
             }
         }
+    }
+
+    private void attack(Character attacker, Direction direction) {
+
+        Weapon agentWeapon = agent.getWeapon();
+
+        int distance = 0;
+        Character victim = null;
+
+        switch (direction) {
+            case WEST:
+                for (Entity entity : entityList) {
+                    if (entity.getyCoordinate() == attacker.getyCoordinate()) {
+                        for (int i = attacker.getxCoordinate(); i > 0; i--) {
+                            if (entity.getxCoordinate() == i) {
+                                victim = (Character) entity;
+                                distance = attacker.getxCoordinate() - victim.getxCoordinate();
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case EAST:
+                for (Entity entity : entityList) {
+                    if (entity.getyCoordinate() == attacker.getyCoordinate()) {
+                        for (int i = attacker.getxCoordinate(); i < gameGrid.getDimension().getWidth(); i++) {
+                            if (entity.getxCoordinate() == i) {
+                                victim = (Character) entity;
+                                distance = victim.getxCoordinate() - attacker.getxCoordinate();
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case NORTH:
+                for (Entity entity : entityList) {
+                    if (entity.getxCoordinate() == attacker.getxCoordinate()) {
+                        for (int i = attacker.getyCoordinate(); i > 0; i--) {
+                            if (entity.getyCoordinate() == i) {
+                                victim = (Character) entity;
+                                distance = attacker.getyCoordinate() - victim.getyCoordinate();
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case SOUTH:
+                for (Entity entity : entityList) {
+                    if (entity.getxCoordinate() == attacker.getxCoordinate()) {
+                        for (int i = attacker.getyCoordinate(); i < gameGrid.getDimension().getHeight(); i++) {
+                            if (entity.getxCoordinate() == i) {
+                                victim = (Character) entity;
+                                distance = victim.getyCoordinate() - attacker.getyCoordinate();
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+
+        // Check that there is a victim (target) and it's in range
+        if (victim != null) {
+            attacker.attack(victim);
+
+            if (victim.getHealth() <= 0) {
+                if (victim instanceof Agent) {
+                    System.out.println("GAME OVER!");
+                }
+
+                if (victim instanceof Enemy) {
+                    System.out.println("You KILLED AN ENEMY!");
+                    victim = null;
+                }
+            }
+        }
+
     }
 
     /**

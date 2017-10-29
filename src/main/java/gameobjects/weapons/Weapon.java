@@ -1,5 +1,7 @@
 package gameobjects.weapons;
 
+import gameobjects.Character;
+
 /**
  * Weapon
  *
@@ -30,5 +32,15 @@ abstract public class Weapon {
 
     public String getName() {
         return name;
+    }
+
+    /**
+     * Calculate the damage that an entity will inflict.
+     *
+     * @param attacker the attacker
+     * @return the damage inflicted
+     */
+    public int calculateDamage(Character attacker) {
+        return this.getAttackPower() * attacker.getStrength();
     }
 }

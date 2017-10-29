@@ -10,7 +10,7 @@ import static java.lang.Math.round;
  * @author stefano
  * @version 1.0.0
  */
-abstract class Character extends Entity {
+public abstract class Character extends Entity {
 
     private int health;
 
@@ -66,7 +66,7 @@ abstract class Character extends Entity {
 
     public void attack(Character character) {
         if (getDistance(character) <= weapon.getRange()) {
-            character.decreaseHealth(weapon.getAttackPower()*this.getStrength());
+            character.decreaseHealth(weapon.calculateDamage(this));
         }
     }
 }
