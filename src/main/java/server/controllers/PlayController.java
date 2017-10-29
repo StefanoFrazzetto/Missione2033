@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import server.Application;
-import server.responses.Message;
 import server.responses.Status;
 
 /**
@@ -30,12 +29,12 @@ public class PlayController {
     }
 
     @RequestMapping("/play/move")
-    public Message move(@RequestParam(value = "d") String direction) {
+    public Status move(@RequestParam(value = "d") String direction) {
 
         Direction dir = Direction.fromCode(direction.charAt(0));
 
         gameEngine.handleMovement(dir);
 
-        return new Message("Moving " + direction);
+        return Status.fromGameEngine(gameEngine);
     }
 }
