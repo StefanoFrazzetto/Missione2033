@@ -48,7 +48,7 @@ public class GameEngine implements Serializable {
     }
 
     public void initializeGame() {
-        String filename = "Levels/MansionLevel.txt";
+        String filename = "Levels/testlevel.txt";
         loadLevel(filename);
     }
 
@@ -280,6 +280,9 @@ public class GameEngine implements Serializable {
                 }
             }
         }
+
+        System.out.println("Shooting direction: " + direction);
+        System.out.println("Victim: " + victim);
 
         // Let's move the enemies
         moveEnemies();
