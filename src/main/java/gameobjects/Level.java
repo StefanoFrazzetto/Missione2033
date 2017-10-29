@@ -82,9 +82,10 @@ public class Level {
                 // Get the GameObject from the char
                 GameObject currentGameObject = GameObject.fromChar(rawLevel.get(row).charAt(column));
 
-                if ( // static object
-                        currentGameObject == GameObject.FLOOR ||
-                                currentGameObject == GameObject.WALL
+                if      ( // static object
+                                currentGameObject == GameObject.FLOOR ||
+                                currentGameObject == GameObject.WALL ||
+                                currentGameObject == GameObject.GRASS
                         ) {
                     gameGrid.putGameObjectAt(row, column, currentGameObject);
                 } else { // entity
