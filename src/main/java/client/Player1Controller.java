@@ -30,7 +30,7 @@ public class Player1Controller extends PlayerController {
             Player1Model model = (Player1Model) this.model;
 
 
-            switch (event.getText().toUpperCase()) {
+            switch (event.getCode().toString().toUpperCase()) {
 
                 // Move
                 case "W":
