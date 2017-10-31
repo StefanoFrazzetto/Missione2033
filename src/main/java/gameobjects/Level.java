@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Level
@@ -20,6 +21,8 @@ public class Level {
     private final List<Entity> entityList;
 
     public Level(InputStream stream) {
+        Objects.requireNonNull(stream);
+
         List<String> rawLevel = parseStreamContent(stream);
         gameGrid = new GameGrid(rawLevel.size(), rawLevel.get(0).length());
         entityList = new ArrayList<>();
