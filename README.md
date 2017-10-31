@@ -1,6 +1,6 @@
-Missione
+Missione 2033
 ======
-**Missione 2033** is a co-op game we created for the 2017 edition hackathon "Do You Have The GUTS?".
+**Missione 2033** is an asymmetric co-op game we created for the 2017 edition hackathon "Do You Have The GUTS?".
 
 ## Download
 * Coming soon
