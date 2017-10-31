@@ -5,6 +5,15 @@ Missione
 ## Download
 * Coming soon
 
+## Screenshots
+![Player 1](https://github.com/StefanoFrazzetto/GUTS2017/blob/master/screnshots/player1.png "Player 1 UI")
+
+Player one UI
+
+![Player 2](https://github.com/StefanoFrazzetto/GUTS2017/blob/master/screnshots/player2.png "Player 2 UI")
+
+Player two UI
+
 ### Contributors on GitHub
 * Server:   [Stefano Frazzetto](https://github.com/StefanoFrazzetto)
 * Client:   [Vittorio Iocolano](https://github.com/SirPryderi)
