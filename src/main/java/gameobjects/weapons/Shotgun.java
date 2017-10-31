@@ -9,6 +9,6 @@ package gameobjects.weapons;
 public class Shotgun extends Weapon {
 
     public Shotgun() {
-        super("Shotgun", 5, 6);
+        super("Shotgun", 10, 6);
     }
 }
