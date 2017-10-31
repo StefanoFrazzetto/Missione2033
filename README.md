@@ -12,6 +12,7 @@ Missione
 
 ### Third party libraries
 * [Spring](http://spring.io/)
+* [Unirest](https://github.com/Kong/unirest-java)
 
 ## License 
 * [GNU GPL v3](./LICENSE)
