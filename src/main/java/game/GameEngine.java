@@ -1,6 +1,8 @@
-package gameobjects;
+package game;
 
 import algorithms.*;
+import game.entities.*;
+import game.entities.Character;
 
 import java.io.InputStream;
 import java.io.Serializable;

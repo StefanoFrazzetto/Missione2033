@@ -1,6 +1,6 @@
 package server.controllers;
 
-import gameobjects.GameEngine;
+import game.GameEngine;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.Application;

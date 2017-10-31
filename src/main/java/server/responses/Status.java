@@ -1,6 +1,6 @@
 package server.responses;
 
-import gameobjects.GameEngine;
+import game.GameEngine;
 import utils.Serializer;
 
 import java.io.IOException;

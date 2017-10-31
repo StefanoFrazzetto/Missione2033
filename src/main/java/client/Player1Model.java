@@ -5,7 +5,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import gameobjects.Direction;
+import game.Direction;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 

@@ -1,4 +1,4 @@
-package gameobjects.weapons;
+package game.weapons;
 
 /**
  * Knife

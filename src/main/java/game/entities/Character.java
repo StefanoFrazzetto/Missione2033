@@ -1,6 +1,6 @@
-package gameobjects;
+package game.entities;
 
-import gameobjects.weapons.Weapon;
+import game.weapons.Weapon;
 
 /**
  * Character

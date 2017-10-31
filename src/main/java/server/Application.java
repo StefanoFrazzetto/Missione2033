@@ -1,6 +1,6 @@
 package server;
 
-import gameobjects.GameEngine;
+import game.GameEngine;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

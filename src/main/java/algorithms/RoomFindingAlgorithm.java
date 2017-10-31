@@ -1,9 +1,9 @@
 package algorithms;
 
-import gameobjects.Door;
-import gameobjects.Entity;
-import gameobjects.GameGrid;
-import gameobjects.GameObject;
+import game.entities.Door;
+import game.entities.Entity;
+import game.GameGrid;
+import game.GameObject;
 import javafx.geometry.Rectangle2D;
 
 import java.util.List;

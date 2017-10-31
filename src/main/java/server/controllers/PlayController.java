@@ -1,7 +1,7 @@
 package server.controllers;
 
-import gameobjects.Direction;
-import gameobjects.GameEngine;
+import game.Direction;
+import game.GameEngine;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

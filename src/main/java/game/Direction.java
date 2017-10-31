@@ -1,4 +1,4 @@
-package gameobjects;
+package game;
 
 /**
  * An enumeration containing all the possible movements in the {@link GameGrid}.

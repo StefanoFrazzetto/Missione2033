@@ -2,9 +2,9 @@ package client;
 
 import algorithms.RoomFindingAlgorithm;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import gameobjects.Agent;
-import gameobjects.Direction;
-import gameobjects.Entity;
+import game.entities.Agent;
+import game.Direction;
+import game.entities.Entity;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;

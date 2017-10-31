@@ -1,7 +1,7 @@
-package gameobjects;
+package game.entities;
 
-import gameobjects.weapons.Shotgun;
-import gameobjects.weapons.Weapon;
+import game.weapons.Shotgun;
+import game.weapons.Weapon;
 
 /**
  * Agent

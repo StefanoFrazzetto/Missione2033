@@ -1,6 +1,8 @@
 package client;
 
-import gameobjects.*;
+import game.GameGrid;
+import game.GameObject;
+import game.entities.*;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;

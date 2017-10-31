@@ -1,4 +1,6 @@
-package gameobjects;
+package game;
+
+import game.entities.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;

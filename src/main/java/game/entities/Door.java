@@ -1,4 +1,6 @@
-package gameobjects;
+package game.entities;
+
+import game.GameObject;
 
 /**
  * Door

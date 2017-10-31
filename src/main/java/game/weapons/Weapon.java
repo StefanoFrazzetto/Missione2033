@@ -1,6 +1,6 @@
-package gameobjects.weapons;
+package game.weapons;
 
-import gameobjects.Character;
+import game.entities.Character;
 
 import java.io.Serializable;
 

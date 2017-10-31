@@ -1,6 +1,6 @@
 package algorithms;
 
-import gameobjects.GameEngine;
+import game.GameEngine;
 import server.Application;
 
 /**

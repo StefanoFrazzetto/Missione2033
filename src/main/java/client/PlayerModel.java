@@ -4,8 +4,8 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import gameobjects.Entity;
-import gameobjects.GameGrid;
+import game.entities.Entity;
+import game.GameGrid;
 import utils.Serializer;
 
 import java.io.IOException;
