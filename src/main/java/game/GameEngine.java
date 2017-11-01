@@ -232,13 +232,15 @@ public class GameEngine implements Serializable {
         getDoors().forEach(door -> {
             if (door.getDoorType() == doorType)
                 door.open();
+            else
+                door.close();
         });
     }
 
     public void closeDoors(char doorType) {
         getDoors().forEach(door -> {
             if (door.getDoorType() == doorType)
-                door.open();
+                door.close();
         });
     }
 

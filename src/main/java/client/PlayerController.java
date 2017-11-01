@@ -95,13 +95,15 @@ public abstract class PlayerController {
     }
 
     private boolean isTileVisible(int x, int y, int minx, int miny, int maxwidth, int maxheight) {
-        if (x < minx)
-            return false;
-        if (x > minx + maxwidth)
-            return false;
-        if (y < miny)
-            return false;
-        return y <= miny + maxheight;
+//        if (x < minx)
+//            return false;
+//        if (x > minx + maxwidth)
+//            return false;
+//        if (y < miny)
+//            return false;
+//        return y <= miny + maxheight;
+
+        return true;
     }
 
     public void draw(int minx, int miny, int maxwidth, int maxheight) {

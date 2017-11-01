@@ -45,7 +45,7 @@ public class Player1Model extends PlayerModel {
         try {
             HttpResponse<JsonNode> response = Unirest.get(String.format("%s/play/move?d=%s", Main.getHost(), direction.getCode())).asJson();
 
-            this.updateEntityListFromJsonResponse(response);
+            this.updateLevelFromJsonResponse(response);
         } catch (UnirestException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -61,7 +61,7 @@ public class Player1Model extends PlayerModel {
         try {
             HttpResponse<JsonNode> response = Unirest.get(String.format("%s/action/attack?direction=%s", Main.getHost(), direction.getCode())).asJson();
 
-            this.updateEntityListFromJsonResponse(response);
+            this.updateLevelFromJsonResponse(response);
         } catch (UnirestException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

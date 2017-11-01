@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import server.Application;
-import server.responses.EntityList;
 import server.responses.Status;
 
 import java.io.IOException;
@@ -32,23 +31,23 @@ public class PlayController {
     }
 
     @RequestMapping("/play/move")
-    public EntityList move(@RequestParam(value = "d") String direction) throws IOException {
+    public Status move(@RequestParam(value = "d") String direction) throws IOException {
 
         Direction dir = Direction.fromCode(direction.charAt(0));
 
         gameEngine.handleMovement(dir);
 
-        return new EntityList(gameEngine.getEntityList());
+        return Status.fromGameEngine(gameEngine);
     }
 
     @RequestMapping("/action/attack")
-    public EntityList openDoors(@RequestParam(value="direction") String direction) throws IOException {
+    public Status openDoors(@RequestParam(value="direction") String direction) throws IOException {
 
         GameEngine gameEngine = Application.getEngine();
         Direction dir = Direction.fromCode(direction.charAt(0));
 
         gameEngine.attack(gameEngine.getAgent(), dir);
 
-        return new EntityList(gameEngine.getEntityList());
+        return Status.fromGameEngine(gameEngine);
     }
 }
