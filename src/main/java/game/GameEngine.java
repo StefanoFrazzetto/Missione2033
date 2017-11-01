@@ -1,12 +1,14 @@
 package game;
 
 import algorithms.*;
-import game.entities.*;
+import game.entities.Agent;
 import game.entities.Character;
+import game.entities.Enemy;
+import game.entities.Entity;
 import game.gridobjects.Door;
 import game.gridobjects.Exit;
+import game.gridobjects.GridObject;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.*;
 
@@ -28,7 +30,7 @@ public class GameEngine implements Serializable {
     /**
      * The current level
      */
-    private Level currentLevel;
+    private Level level;
 
     /**
      * The game status
@@ -37,39 +39,26 @@ public class GameEngine implements Serializable {
      */
     private GameStatus gameStatus;
 
-    /**
-     * The game grid containing the object
-     */
-    private Grid<Entity> gameGrid;
-
-    /**
-     * The list of entities in the level
-     */
-    private List<Entity> entityList;
-
     public GameEngine() {
         initializeGame();
     }
 
     public void initializeGame() {
-        String filename = "Levels/MansionLevel.txt";
-        loadLevel(filename);
+        loadLevel("MansionLevel");
         setGameStatus(GameStatus.RUNNING);
     }
 
     private void checkGameStatus() {
-        for (Entity entity : entityList) {
+        for (Entity entity : this.level.getEntities()) {
             if (entity instanceof Enemy) {
-                if (entity.getDistance(agent) == 0) {
+                if (entity.getDistance(agent) < 1) {
                     setGameStatus(GameStatus.GAME_OVER);
                 }
             }
+        }
 
-            if (entity instanceof Exit) {
-                if (entity.getDistance(agent) == 0) {
-                    setGameStatus(GameStatus.VICTORY);
-                }
-            }
+        if (level.getGameGrid().getBelow(agent) instanceof Exit) {
+            setGameStatus(GameStatus.VICTORY);
         }
     }
 
@@ -87,40 +76,32 @@ public class GameEngine implements Serializable {
     /**
      * Load the level from a txt file.
      *
-     * @param fileName the file name
+     * @param levelName the file name
      */
-    public void loadLevel(String fileName) {
-        Objects.requireNonNull(fileName);
+    public void loadLevel(String levelName) {
+        Objects.requireNonNull(levelName);
 
-        // Import the level from a file
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
-        currentLevel = new Level(inputStream);
-        gameGrid = currentLevel.getGameGrid();
-        entityList = currentLevel.getGameObjectList();
+        level = LevelLoader.loadLevel(levelName);
 
-        for (Entity entity : entityList) {
-            if (entity instanceof Agent) {
-                agent = (Agent) entity;
-                break;
-            }
-        }
-
-        if (agent == null)
+        try {
+            agent = level.getEntities().getAgents().get(0);
+        } catch (Exception e) {
             throw new RuntimeException("No agent found!");
+        }
     }
 
     /**
      * @return the game grid
      */
-    public Grid<Entity> getGameGrid() {
-        return gameGrid;
+    public Grid<GridObject> getGameGrid() {
+        return level.getGameGrid();
     }
 
     /**
      * @return the list containing the entities
      */
-    public List<Entity> getEntityList() {
-        return entityList;
+    public Entities getEntityList() {
+        return level.getEntities();
     }
 
     /**
@@ -162,7 +143,7 @@ public class GameEngine implements Serializable {
         }
 
         if (isNodeFree(x, y)) {
-            agent.setCoordinates(x, y);
+            agent.setPosition(x, y);
             moveEnemies();
         }
 
@@ -171,23 +152,11 @@ public class GameEngine implements Serializable {
     }
 
     public boolean isNodeFree(double x, double y) {
-        if (gameGrid.getGameObjectAt(x, y) == LevelParser.WALL)
-            return false;
+        return !this.level.getGameGrid().isBlocked((int) x, (int) y);
+    }
 
-        for (Entity entity : entityList) {
-            if (entity.getX() == x && entity.getY() == y && !(entity instanceof Agent)) {
-
-                if (entity instanceof Door && !((Door) entity).isOpen()) {
-                    return false;
-                }
-
-                if (entity instanceof Character) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+    public boolean isNodeFree(int x, int y) {
+        return !this.level.getGameGrid().isBlocked(x, y);
     }
 
     /**
@@ -213,19 +182,8 @@ public class GameEngine implements Serializable {
         return nodes;
     }
 
-    private List<Enemy> getEnemies() {
-        List<Enemy> enemies = new ArrayList<>();
-        for (Entity entity : entityList) {
-            if (entity instanceof Enemy) {
-                enemies.add((Enemy) entity);
-            }
-        }
-
-        return enemies;
-    }
-
     private void moveEnemies() {
-        List<Enemy> enemies = getEnemies();
+        List<Enemy> enemies = getEntityList().getEnemies();
 
         for (Enemy enemy : enemies) {
             AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(this), 500, false);
@@ -239,7 +197,7 @@ public class GameEngine implements Serializable {
 
             if (path != null) {
                 Path.Step step = path.getStep(1);
-                enemy.setCoordinates(step.getX(), step.getY());
+                enemy.setPosition(step.getX(), step.getY());
             }
         }
     }

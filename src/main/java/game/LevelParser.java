@@ -1,7 +1,9 @@
 package game;
 
-import game.gridobjects.Floor;
-import game.gridobjects.GridObject;
+import game.entities.Agent;
+import game.entities.Enemy;
+import game.entities.Entity;
+import game.gridobjects.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,13 +19,13 @@ import java.util.Objects;
 public class LevelParser {
 
     private List<String> rawLevel;
-
     private Grid<Floor> floorGrid;
-
     private Grid<GridObject> objectsGrid;
+    private Entities entities;
+
+    private boolean parsed = false;
 
     private int xMaxSize = 0;
-
     private int yMaxSize = 0;
 
     /**
@@ -57,6 +59,18 @@ public class LevelParser {
         }
     }
 
+    public Grid<Floor> getFloorGrid() {
+        return floorGrid;
+    }
+
+    public Grid<GridObject> getObjectsGrid() {
+        return objectsGrid;
+    }
+
+    public Entities getEntities() {
+        return entities;
+    }
+
     private void getLevelSize() {
 
         yMaxSize = rawLevel.size();
@@ -73,12 +87,12 @@ public class LevelParser {
      *
      * @param rawLevel the raw level
      */
-    public void parseRawLevel(List<String> rawLevel) {
+    private void parseRawLevel(List<String> rawLevel) {
 
         getLevelSize();
         floorGrid = new Grid<>(Floor.class, xMaxSize, yMaxSize);
         objectsGrid = new Grid<>(GridObject.class, xMaxSize, yMaxSize);
-
+        entities = new Entities();
         // Loop over the List
         for (int y = 0; y < rawLevel.size(); y++) {
 
@@ -89,18 +103,28 @@ public class LevelParser {
                 char currentChar = rawLevel.get(y).charAt(x);
                 Floor floor = new Floor();
                 GridObject gridObject = null;
+                Entity entity = null;
 
                 switch (currentChar) {
                     case 'A': // agent
+                        entity = new Agent();
                         break;
 
-                    case 'D': // door
+                    case 'X': // doors
+                    case 'O':
+                    case 'P':
+                    case 'R':
+                    case 'S':
+                    case 'T':
+                        gridObject = new Door(currentChar);
                         break;
 
                     case 'E': // exit
+                        gridObject = new Exit();
                         break;
 
                     case 'H': // enemy
+                        entity = new Enemy();
                         break;
 
                     case '.': // grass
@@ -108,15 +132,31 @@ public class LevelParser {
                         break;
 
                     case 'W': // wall
+                        gridObject = new Wall();
                         break;
 
                     default:
 
                 }
 
+                if (entity != null) {
+                    entity.setPosition(x, y);
+                    entities.add(entity);
+                }
+
                 floorGrid.put(floor, x, y);
                 objectsGrid.put(gridObject, x, y);
             }
         } // END- String loop
+
+        parsed = true;
     } // END - List loop
+
+    public void parse() {
+        parseRawLevel(this.rawLevel);
+    }
+
+    public boolean isParsed() {
+        return parsed;
+    }
 }

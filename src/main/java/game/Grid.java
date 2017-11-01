@@ -1,20 +1,20 @@
 package game;
 
 import com.sun.istack.internal.Nullable;
+import game.entities.Entity;
 import game.interfaces.Griddable;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * Grid
  *
  * @author Stefano Frazzetto
- * @authro Vittorio Iocolano
  * @version 1.0.0
+ * @authro Vittorio Iocolano
  */
 public class Grid<T extends Griddable> implements Iterable<T>, Serializable, Cloneable {
 
@@ -23,10 +23,14 @@ public class Grid<T extends Griddable> implements Iterable<T>, Serializable, Clo
      */
     private final Class<? extends Griddable> klass;
 
-    /** The grid width */
+    /**
+     * The grid width
+     */
     private final int WIDTH;
 
-    /** The grid height */
+    /**
+     * The grid height
+     */
     private final int HEIGHT;
 
     /**
@@ -98,6 +102,16 @@ public class Grid<T extends Griddable> implements Iterable<T>, Serializable, Clo
     }
 
     /**
+     * @return the object immediately below the given Entity
+     */
+    public T getBelow(Entity entity) {
+        int x = (int) Math.floor(entity.getX());
+        int y = (int) Math.floor(entity.getY());
+
+        return get(x, y);
+    }
+
+    /**
      * Remove the object at x, y from the grid.
      *
      * @param x
@@ -146,7 +160,7 @@ public class Grid<T extends Griddable> implements Iterable<T>, Serializable, Clo
     public void forEach(GridConsumer<T> action) {
         GridIterator iterator = (GridIterator) iterator();
 
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             action.accept(iterator.next(), iterator.getX(), iterator.getY());
         }
     }

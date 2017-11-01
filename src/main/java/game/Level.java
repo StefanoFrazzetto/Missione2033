@@ -1,16 +1,7 @@
 package game;
 
-import game.entities.*;
-import game.gridobjects.Door;
-import game.gridobjects.Exit;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import game.gridobjects.Floor;
+import game.gridobjects.GridObject;
 
 /**
  * Level
@@ -20,25 +11,38 @@ import java.util.Objects;
  */
 public class Level {
 
-    private final Grid<LevelParser> gameGrid;
+    private final Grid<GridObject> gameGrid;
 
-    private final List<LevelParser> gameObjectList;
+    private final Grid<Floor> floorGrid;
 
-    public Level(InputStream stream) {
+    private final Entities entities;
 
+    public Level(LevelParser parser) {
+        if (!parser.isParsed())
+            throw new IllegalStateException("LevelParser has not parsed the level.");
+
+        this.gameGrid = parser.getObjectsGrid();
+        this.floorGrid = parser.getFloorGrid();
+        this.entities = parser.getEntities();
+
+        assert gameGrid != null;
+        assert floorGrid != null;
+        assert entities != null;
     }
-
-
 
     public String toString() {
         return gameGrid.toString();
     }
 
-    public Grid<LevelParser> getGameGrid() {
+    public Grid<GridObject> getGameGrid() {
         return gameGrid;
     }
 
-    public List<LevelParser> getGameObjectList() {
-        return gameObjectList;
+    public Grid<Floor> getFloorGrid() {
+        return floorGrid;
+    }
+
+    public Entities getEntities() {
+        return entities;
     }
 }
