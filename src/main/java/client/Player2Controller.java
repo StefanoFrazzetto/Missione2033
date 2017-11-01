@@ -28,7 +28,7 @@ public class Player2Controller extends PlayerController {
                 draw();
             } catch (IOException | ClassNotFoundException | UnirestException e) {
                 e.printStackTrace();
-            }
+            } catch (IndexOutOfBoundsException ignored){}
         };
     }
 
