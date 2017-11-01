@@ -4,7 +4,7 @@ import game.Level;
 import javafx.geometry.Rectangle2D;
 
 public class RoomFindingAlgorithm {
-    public static Rectangle2D findRectangleRoom(Level level, int x, int y) {
+    public static Rectangle2D findRectangularRoom(Level level, int x, int y) {
 
         int startx = x;
         int starty = y;
