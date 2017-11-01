@@ -193,10 +193,10 @@ public class GameEngine implements Serializable {
             AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(this), 500, false);
             Path path = aStarPathFinder.findPath(
                     new UnitMover(),
-                    enemy.getX(),
-                    enemy.getY(),
-                    agent.getX(),
-                    agent.getY()
+                    (int) enemy.getX(),
+                    (int) enemy.getY(),
+                    (int) agent.getX(),
+                    (int) agent.getY()
             );
 
             if (path != null) {
@@ -381,14 +381,14 @@ public class GameEngine implements Serializable {
      */
     public void openDoors(char doorType) {
         getDoors().forEach(door -> {
-            if(door.getDoorType() == doorType)
+            if (door.getDoorType() == doorType)
                 door.open();
         });
     }
 
     public void closeDoors(char doorType) {
         getDoors().forEach(door -> {
-            if(door.getDoorType() == doorType)
+            if (door.getDoorType() == doorType)
                 door.open();
         });
     }
@@ -397,7 +397,7 @@ public class GameEngine implements Serializable {
         List<Door> doors = new ArrayList<>();
 
         level.getGameGrid().forEach((gridObject, x, y) -> {
-            if(gridObject != null && gridObject instanceof Door){
+            if (gridObject != null && gridObject instanceof Door) {
                 doors.add((Door) gridObject);
             }
         });
