@@ -1,7 +1,7 @@
 package game;
 
 /**
- * An enumeration containing all the possible movements in the {@link GameGrid}.
+ * An enumeration containing all the possible movements.
  * <p>
  * Created by Vittorio on 05-Oct-16.
  */
@@ -33,11 +33,18 @@ public enum Direction {
         SOUTH.code = 'S';
         EAST.code = 'E';
         WEST.code = 'W';
+
+        NORTH.vector = new Vector(0, -1);
+        SOUTH.vector = new Vector(0, 1);
+        EAST.vector = new Vector(1, 0);
+        WEST.vector = new Vector(-1, 0);
     }
 
     private Direction opposite;
 
     private char code;
+
+    private Vector vector;
 
     /**
      * @return the opposite {@link Direction}
@@ -51,6 +58,10 @@ public enum Direction {
      */
     public char getCode() {
         return code;
+    }
+
+    public Vector getVector() {
+        return vector;
     }
 
     public static Direction fromCode(char c) {
