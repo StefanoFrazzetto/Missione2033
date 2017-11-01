@@ -32,13 +32,13 @@ public class PlayController {
     }
 
     @RequestMapping("/play/move")
-    public Status move(@RequestParam(value = "d") String direction) {
+    public EntityList move(@RequestParam(value = "d") String direction) throws IOException {
 
         Direction dir = Direction.fromCode(direction.charAt(0));
 
         gameEngine.handleMovement(dir);
 
-        return Status.fromGameEngine(gameEngine);
+        return new EntityList(gameEngine.getEntityList());
     }
 
     @RequestMapping("/action/attack")
