@@ -6,17 +6,17 @@
 ..........w        H   w                             w                       w..
 ..........w   H        w                             wwwwwwwTwwwwwwwwwwwwwwwww..
 ..wwwwwwwww     H  H   w                             w   H H   H             w..
-..ww      w            wwwwOwwwwwwwwwwwwwwwwwwwXwwwwww                       w..
-..ww A    w            w       wH                    w                       w..
-..ww      wwwOwwwwwwwwww       w                     w                       w..
-..ww      w            w       w                     P                       w..
-..ww      w            T       S                     w                       w..
+..w       w            wwwwOwwwwwwwwwwwwwwwwwwwXwwwwww                       w..
+..w  A    w            w       wH                    w                       w..
+..w       wwwOwwwwwwwwww       w                     w                       w..
+..w       w            w       w                     P                       w..
+..w       w            T       S                     w                       w..
 ..wwwwPwwww       wwwXww       wwwwwwwww             wwwwOwwwwwXwwww         w..
-..ww      w       w    w       w.......w             w      w      w         w..
-..ww      w       w    wwwwPwwww.......wwwwwwwwwRwwwww      w      w         w..
-..ww      w       w          w...............w              w H  H w         w..
-..ww      w       w        www...............w              wHHHHH w         w..
-..ww      w       w        w.................www            wHHHHHHw         w..
+..w       w       w    w       w.......w             w      w      w         w..
+..w       w       w    wwwwPwwww.......wwwwwwwwwRwwwww      w      w         w..
+..w       w       w          w...............w              w H  H w         w..
+..w       w       w        www...............w              wHHHHH w         w..
+..w       w       w        w.................www            wHHHHHHw         w..
 ..wwwwXXwwwwwwSwwwwwwwwwwwww...................wwwwwwwwwwwwwwwwwwwwwwwwwSwwwww..
 ..w               w.......................................w                  w..
 ..w               w.......................................w                  w..
