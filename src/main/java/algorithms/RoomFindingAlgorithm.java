@@ -1,15 +1,7 @@
 package algorithms;
 
 import game.Level;
-import game.LevelParser;
-import game.gridobjects.Door;
-import game.entities.Entity;
-import game.GameGrid;
-import game.gridobjects.GridObject;
-import game.gridobjects.Wall;
 import javafx.geometry.Rectangle2D;
-
-import java.util.List;
 
 public class RoomFindingAlgorithm {
     public static Rectangle2D findRectangleRoom(Level level, int x, int y) {
