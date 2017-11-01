@@ -62,6 +62,10 @@ public class GameEngine implements Serializable {
         }
     }
 
+    public Level getLevel() {
+        return level;
+    }
+
     /**
      * @return the game status
      */
