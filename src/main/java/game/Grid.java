@@ -44,7 +44,7 @@ public class Grid<T extends Griddable> implements Iterable<T>, Serializable, Clo
         WIDTH = width;
         HEIGHT = height;
 
-        array = (T[][]) Array.newInstance(klass, WIDTH, HEIGHT);
+        array = (T[][]) Array.newInstance(klass, HEIGHT, WIDTH);
     }
 
     @SuppressWarnings("unchecked")

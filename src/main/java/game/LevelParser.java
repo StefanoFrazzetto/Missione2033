@@ -144,8 +144,11 @@ public class LevelParser {
                     entities.add(entity);
                 }
 
+                if (gridObject != null)
+                    objectsGrid.put(gridObject, x, y);
+
                 floorGrid.put(floor, x, y);
-                objectsGrid.put(gridObject, x, y);
+
             }
         } // END- String loop
 

@@ -9,7 +9,12 @@ import java.util.Objects;
 public class LevelLoader {
     public static Level loadLevel(String levelName) {
         Objects.requireNonNull(levelName);
-        InputStream resourceAsStream = LevelLoader.class.getClassLoader().getResourceAsStream("/Levels/" + levelName + "txt");
+
+        String levelPath = String.format("Levels/%s.txt", levelName);
+
+        System.out.printf("Loading level %s%n", levelPath);
+
+        InputStream resourceAsStream = Level.class.getClassLoader().getResourceAsStream(levelPath);
 
         return loadLevel(resourceAsStream);
     }
