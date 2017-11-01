@@ -218,7 +218,7 @@ public class GameEngine implements Serializable {
         switch (direction) {
             case WEST:
             case EAST:
-                for (Entity entity : entityList) {
+                for (Entity entity : level.getEntities()) {
                     if (entity instanceof Character) {
                         if (entity.getX() == attacker.getX()) {
                             possibleTargets.add((Character) entity);
@@ -229,8 +229,8 @@ public class GameEngine implements Serializable {
                 // Get the maximum distance for the weapon
                 if (direction == Direction.EAST) {
                     double maxReachableColumn = attacker.getY() + attacker.getWeapon().getRange();
-                    if (maxReachableColumn > gameGrid.getDimension().getWidth()) {
-                        maxReachableColumn = (int) gameGrid.getDimension().getWidth();
+                    if (maxReachableColumn > level.getGameGrid().getWidth()) {
+                        maxReachableColumn = (int) level.getGameGrid().getWidth();
                     }
 
                     for (double i = attacker.getY() + 1; i < maxReachableColumn; i++) {
@@ -276,7 +276,7 @@ public class GameEngine implements Serializable {
 
             case NORTH:
             case SOUTH:
-                for (Entity entity : entityList) {
+                for (Entity entity : level.getEntities()) {
                     if (entity instanceof Character) {
                         if (entity.getY() == attacker.getY()) {
                             possibleTargets.add((Character) entity);
@@ -308,8 +308,8 @@ public class GameEngine implements Serializable {
                     }
                 } else { // WEST
                     double maxReachableRow = attacker.getX() + attacker.getWeapon().getRange();
-                    if (maxReachableRow > gameGrid.getDimension().getHeight()) {
-                        maxReachableRow = (int) gameGrid.getDimension().getHeight();
+                    if (maxReachableRow > level.getGameGrid().getHeight()) {
+                        maxReachableRow = (int) level.getGameGrid().getHeight();
                     }
 
                     for (double i = attacker.getX() + 1; i < maxReachableRow; i++) {
@@ -341,7 +341,7 @@ public class GameEngine implements Serializable {
 
                 if (victim instanceof Enemy) {
                     System.out.println("You KILLED AN ENEMY!");
-                    entityList.remove(victim);
+                    level.getEntities().remove(victim);
                 }
             }
         }
@@ -375,22 +375,29 @@ public class GameEngine implements Serializable {
      *
      * @param doorType the door type
      */
-    public void openDoors(LevelParser doorType) {
-        for (Entity entity : entityList) {
-            if (entity instanceof Door) {
-                if (((Door) entity).getDoorType() == doorType)
-                    ((Door) entity).open(); // if the door matches, open it
-                else
-                    ((Door) entity).close(); // otherwise close it
-            }
-        }
+    public void openDoors(char doorType) {
+        getDoors().forEach(door -> {
+            if(door.getDoorType() == doorType)
+                door.open();
+        });
     }
 
-    public void closeDoors(LevelParser doorType) {
-        for (Entity entity : entityList) {
-            if (entity instanceof Door && ((Door) entity).getDoorType() == doorType) {
-                ((Door) entity).close();
+    public void closeDoors(char doorType) {
+        getDoors().forEach(door -> {
+            if(door.getDoorType() == doorType)
+                door.open();
+        });
+    }
+
+    private List<Door> getDoors() {
+        List<Door> doors = new ArrayList<>();
+
+        level.getGameGrid().forEach((gridObject, x, y) -> {
+            if(gridObject != null && gridObject instanceof Door){
+                doors.add((Door) gridObject);
             }
-        }
+        });
+
+        return doors;
     }
 }

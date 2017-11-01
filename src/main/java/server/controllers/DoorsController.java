@@ -25,23 +25,15 @@ public class DoorsController {
 
     @RequestMapping("/doors/open")
     public EntityList openDoors(@RequestParam(value="type") String type) throws IOException {
+        gameEngine.openDoors(type.toUpperCase().charAt(0));
 
-        LevelParser doorType = LevelParser.fromChar(type.charAt(0));
-        List<Entity> entityList = gameEngine.getEntityList();
-
-        gameEngine.openDoors(doorType);
-
-        return new EntityList(entityList);
+        return new EntityList(gameEngine.getEntityList());
     }
 
     @RequestMapping("/doors/close")
     public EntityList closeDoors(@RequestParam(value="type") String type) throws IOException {
+        gameEngine.openDoors(type.toUpperCase().charAt(0));
 
-        LevelParser doorType = LevelParser.fromChar(type.charAt(0));
-        List<Entity> entityList = gameEngine.getEntityList();
-
-        gameEngine.closeDoors(doorType);
-
-        return new EntityList(entityList);
+        return new EntityList(gameEngine.getEntityList());
     }
 }
