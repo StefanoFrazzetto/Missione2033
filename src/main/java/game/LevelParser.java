@@ -119,7 +119,7 @@ public class LevelParser {
                         gridObject = new Door(currentChar);
                         break;
 
-                    case 'E': // exit
+                    case 'Q': // exit
                         gridObject = new Exit();
                         break;
 
