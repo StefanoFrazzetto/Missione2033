@@ -2,7 +2,8 @@ package game.entities;
 
 import java.io.Serializable;
 
-import static java.lang.Math.round;
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 /**
  * Entity
@@ -11,25 +12,37 @@ import static java.lang.Math.round;
  * @version 1.0.0
  */
 public class Entity implements Serializable {
-    private double row;
+    private double x;
 
-    private double column;
+    private double y;
 
-    public void setCoordinates(double x, double y) {
-        this.row = x;
-        this.column = y;
+    public Entity() {
+        this(0, 0);
+    }
+
+    public Entity(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
     public double getX() {
-        return row;
+        return x;
     }
 
     public double getY() {
-        return column;
+        return y;
     }
 
-    public int getDistance(Entity entity) {
-        return (int) round(Math.sqrt(Math.pow(entity.getX() - this.getX(), 2) +
-                Math.pow(entity.getY() - this.getY(), 2)));
+    public double getDistance(Entity entity) {
+        return sqrt(getSquaredDistance(entity));
+    }
+
+    public double getSquaredDistance(Entity entity) {
+        return pow(entity.getX() - this.getX(), 2) + pow(entity.getY() - this.getY(), 2);
     }
 }
