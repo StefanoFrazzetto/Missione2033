@@ -128,7 +128,7 @@ public class LevelParser {
                         break;
 
                     case '.': // grass
-                        floor = new Floor();
+                        floor = new Grass();
                         break;
 
                     case 'W': // wall
