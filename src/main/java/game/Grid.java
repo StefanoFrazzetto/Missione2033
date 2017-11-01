@@ -149,7 +149,7 @@ public class Grid<T extends Griddable> implements Iterable<T>, Serializable, Clo
     public boolean isBlocked(int x, int y) {
         T t = get(x, y);
 
-        return t == null || t.isBlocking();
+        return t != null && t.isBlocking();
     }
 
     @Override
