@@ -1,10 +1,9 @@
 package client;
 
-import game.GameGrid;
-import game.LevelParser;
-import game.entities.*;
-import game.gridobjects.Door;
-import game.gridobjects.Exit;
+import game.entities.Agent;
+import game.entities.Enemy;
+import game.entities.Entity;
+import game.gridobjects.*;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -37,6 +36,7 @@ public abstract class PlayerController {
     private static final Paint EXIT_COLOR = new ImagePattern(exit);//Color.WHITE;
 
     private static final Paint ENEMY_COLOR = new ImagePattern(enemy);
+    private static final Paint AGENT_COLOR = new ImagePattern(agent);
 
     public GridPane gridPane;
 
@@ -57,110 +57,103 @@ public abstract class PlayerController {
     protected abstract boolean showCharacters();
 
     public void draw() {
-        draw(0, 0, model.gameGrid.COLUMNS, model.gameGrid.ROWS);
+        draw(0, 0, model.level.getGameGrid().getWidth(), model.level.getGameGrid().getWidth());
+    }
+
+    private Node render(Paint fill) {
+        return new Rectangle(getRectSize(), getRectSize(), fill);
+    }
+
+    private Node renderDoor(Door door, int x, int y) {
+        Rectangle rect = new Rectangle(getRectSize(), getRectSize());
+
+        if (door.isOpen()) {
+            rect.setFill(OPEN_DOOR_COLOR);
+        } else {
+            rect.setFill(CLOSED_DOOR_COLOR);
+        }
+
+
+        Text text = new Text(String.valueOf(door.getDoorType()));
+        StackPane stack = new StackPane();
+        stack.getChildren().add(rect);
+        stack.getChildren().add(text);
+
+        // Attempts to guess door orientation
+        try {
+            GridObject objectToTheRight = model.getGameGrid().get(x + 1, y);
+
+            if (objectToTheRight instanceof Wall || objectToTheRight instanceof Door)
+                rect.setHeight(getRectSize() / 2);
+            else
+                rect.setWidth(getRectSize() / 2);
+        } finally {
+            // NON  FACEMO UNA MINGHIA
+        }
+
+        return stack;
+    }
+
+    private boolean isTileVisible(int x, int y, int minx, int miny, int maxwidth, int maxheight) {
+        if (x < minx)
+            return false;
+        if (x > minx + maxwidth)
+            return false;
+        if (y < miny)
+            return false;
+        return y <= miny + maxheight;
     }
 
     public void draw(int minx, int miny, int maxwidth, int maxheight) {
         gridPane.getChildren().clear();
 
-        GameGrid.GridIterator iterator = (GameGrid.GridIterator) model.getGameGrid().iterator();
+        model.level.getFloorGrid().forEach((tile, x, y) -> {
+            if (!isTileVisible(x, y, minx, miny, maxwidth, maxheight)) {
+                return;
+            }
 
-        while (iterator.hasNext()) {
+            StackPane stackPane = new StackPane();
 
-            LevelParser next = iterator.next();
-            Rectangle rect = new Rectangle(getRectSize(), getRectSize());
 
-            int x = iterator.getColumn();
-            int y = iterator.getRow();
-
-            if (x < minx)
-                continue;
-            if (x > minx + maxwidth)
-                continue;
-            if (y < miny)
-                continue;
-            if (y > miny + maxheight)
-                continue;
-
-            if (next == null) {
-                rect.setFill(FLOOR_COLOR);
+            if (tile instanceof Grass) {
+                stackPane.getChildren().add(render(GRASS_COLOR));
             } else {
-                switch (next) {
-                    case WALL:
-                        rect.setFill(WALL_COLOR);
-                        break;
-                    case FLOOR:
-                        rect.setFill(FLOOR_COLOR);
-                        break;
-                    case GRASS:
-                        rect.setFill(GRASS_COLOR);
-                        break;
-                }
+                stackPane.getChildren().add(render(FLOOR_COLOR));
             }
 
 
-            gridPane.add(rect, y, x);
-        }
+            GridObject gridObject = model.level.getGameGrid().get(x, y);
 
-        for (Entity entity : model.entityList) {
-            Node node = null;
-            Rectangle rect = new Rectangle(getRectSize(), getRectSize());
-            rect.setFill(Color.RED);
-
-            double x = entity.getX();
-            double y = entity.getY();
-
-            if (x < minx)
-                continue;
-            if (x > minx + maxwidth)
-                continue;
-            if (y < miny)
-                continue;
-            if (y > miny + maxheight)
-                continue;
-
-            if (entity instanceof Door) {
-                if (((Door) entity).isOpen()) {
-                    rect.setFill(OPEN_DOOR_COLOR);
-                } else {
-                    rect.setFill(CLOSED_DOOR_COLOR);
-                }
-
-                Text text = new Text(((Door) entity).getDoorType().getStringSymbol());
-                StackPane stack = new StackPane();
-                stack.getChildren().add(rect);
-                stack.getChildren().add(text);
-
-                try {
-                    if (model.gameGrid.getGameObjectAt(x + 1, y) != LevelParser.FLOOR)
-                        rect.setWidth(getRectSize() / 2);
-                    else
-                        rect.setHeight(getRectSize() / 2);
-                } finally {
-                    // NON  FACEMO UNA MINGHIA
-                }
-
-                node = stack;
-
-            } else if (entity instanceof Enemy) {
-                rect.setFill(ENEMY_COLOR);
-            } else if (entity instanceof Agent) {
-                ImagePattern imagePattern = new ImagePattern(agent);
-
-                rect.setFill(imagePattern);
-            } else if (entity instanceof Exit) {
-                rect.setFill(EXIT_COLOR);
+            if (gridObject instanceof Wall) {
+                stackPane.getChildren().add(render(WALL_COLOR));
+            } else if (gridObject instanceof Door) {
+                stackPane.getChildren().add(renderDoor((Door) gridObject, x, y));
+            } else if (gridObject instanceof Exit) {
+                stackPane.getChildren().add(render(EXIT_COLOR));
             }
 
-            if (node == null) {
-                if (!showCharacters())
+            gridPane.add(stackPane, x, y);
+        });
+
+        if (showCharacters())
+            for (Entity entity : model.level.getEntities()) {
+                Rectangle rect = new Rectangle(getRectSize(), getRectSize());
+
+                int x = (int) entity.getX();
+                int y = (int) entity.getY();
+
+                if (!isTileVisible(x, y, minx, miny, maxwidth, maxheight)) {
                     continue;
+                }
 
-                node = rect;
+                if (entity instanceof Agent) {
+                    rect.setFill(AGENT_COLOR);
+                } else if (entity instanceof Enemy) {
+                    rect.setFill(ENEMY_COLOR);
+                }
+
+                gridPane.add(rect, x, y);
             }
-
-            gridPane.add(node, entity.getY(), entity.getX());
-        }
 
         gridPane.getScene().getWindow().sizeToScene();
     }
