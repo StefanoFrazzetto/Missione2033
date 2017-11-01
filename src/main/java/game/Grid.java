@@ -1,11 +1,13 @@
 package game;
 
+import com.sun.istack.internal.Nullable;
 import game.interfaces.Griddable;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Grid
@@ -139,6 +141,18 @@ public class Grid<T extends Griddable> implements Iterable<T>, Serializable, Clo
     @Override
     public Iterator<T> iterator() {
         return new GridIterator();
+    }
+
+    public void forEach(GridConsumer<T> action) {
+        GridIterator iterator = (GridIterator) iterator();
+
+        while (iterator.hasNext()){
+            action.accept(iterator.next(), iterator.getX(), iterator.getY());
+        }
+    }
+
+    public interface GridConsumer<T> {
+        void accept(@Nullable T t, int x, int y);
     }
 
     /**
