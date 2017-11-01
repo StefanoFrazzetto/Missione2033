@@ -1,8 +1,8 @@
 package server.controllers;
 
+import game.LevelParser;
 import game.entities.Entity;
 import game.GameEngine;
-import game.GameObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +26,7 @@ public class DoorsController {
     @RequestMapping("/doors/open")
     public EntityList openDoors(@RequestParam(value="type") String type) throws IOException {
 
-        GameObject doorType = GameObject.fromChar(type.charAt(0));
+        LevelParser doorType = LevelParser.fromChar(type.charAt(0));
         List<Entity> entityList = gameEngine.getEntityList();
 
         gameEngine.openDoors(doorType);
@@ -37,7 +37,7 @@ public class DoorsController {
     @RequestMapping("/doors/close")
     public EntityList closeDoors(@RequestParam(value="type") String type) throws IOException {
 
-        GameObject doorType = GameObject.fromChar(type.charAt(0));
+        LevelParser doorType = LevelParser.fromChar(type.charAt(0));
         List<Entity> entityList = gameEngine.getEntityList();
 
         gameEngine.closeDoors(doorType);

@@ -20,9 +20,9 @@ public class GameGrid implements Iterable, Serializable {
     public final int ROWS;
 
     /**
-     * The grid containing every GameObject
+     * The grid containing every Entity
      */
-    private GameObject[][] gameObjects;
+    private LevelParser[][] gameObjects;
 
     /**
      * Create the grid using columns and rows to set the maximum size.
@@ -35,14 +35,14 @@ public class GameGrid implements Iterable, Serializable {
         ROWS = rows;
 
         // Initialize the array
-        gameObjects = new GameObject[COLUMNS][ROWS];
+        gameObjects = new LevelParser[COLUMNS][ROWS];
     }
 
     /**
-     * Return the point located at a distance delta from a starting GameObject.
+     * Return the point located at a distance delta from a starting Entity.
      *
      * @param sourceLocation the source point
-     * @param delta          the distance between the reference GameObject and the target point
+     * @param delta          the distance between the reference Entity and the target point
      * @return the target point at a distance delta from sourceLocation.
      */
     static Point translatePoint(Point sourceLocation, Point delta) {
@@ -52,34 +52,25 @@ public class GameGrid implements Iterable, Serializable {
     }
 
     /**
-     * Return the size of this grid as {@link Dimension}.
+     * Gets the Entity at delta distance from the origin Entity.
      *
-     * @return a {@link Dimension} GameObject that indicates the size of this grid
-     */
-    public Dimension getDimension() {
-        return new Dimension(COLUMNS, ROWS);
-    }
-
-    /**
-     * Gets the GameObject at delta distance from the origin GameObject.
-     *
-     * @param source the source GameObject location
+     * @param source the source Entity location
      * @param delta  the distance from source
-     * @return the target GameObject
+     * @return the target Entity
      */
-    GameObject getTargetFromSource(Point source, Point delta) {
+    LevelParser getTargetFromSource(Point source, Point delta) {
         return getGameObjectAt(translatePoint(source, delta));
     }
 
     /**
-     * Get the GameObject positioned at (x, y).
+     * Get the Entity positioned at (x, y).
      *
-     * @param column the row of the GameObject
-     * @param row    the column of the GameObject
-     * @return GameObject
+     * @param column the row of the Entity
+     * @param row    the column of the Entity
+     * @return Entity
      * @throws ArrayIndexOutOfBoundsException if the coordinates are outside the grid bounds
      */
-    public GameObject getGameObjectAt(int column, int row) throws ArrayIndexOutOfBoundsException {
+    public LevelParser getGameObjectAt(double column, double row) throws ArrayIndexOutOfBoundsException {
         if (isPointOutOfBounds(column, row)) {
             throw new ArrayIndexOutOfBoundsException("The point [" + column + ":" + row + "] is outside the map.");
         }
@@ -88,22 +79,22 @@ public class GameGrid implements Iterable, Serializable {
     }
 
     /**
-     * Get an GameObject located at the chosen {@link Point}
+     * Get an Entity located at the chosen {@link Point}
      *
-     * @param point the point where the GameObject should be found
-     * @return GameObject if the the GameObject is found || null if the point is null
+     * @param point the point where the Entity should be found
+     * @return Entity if the the Entity is found || null if the point is null
      */
-    public GameObject getGameObjectAt(Point point) {
+    public LevelParser getGameObjectAt(Point point) {
         Objects.requireNonNull(point);
 
         return getGameObjectAt((int) point.getX(), (int) point.getY());
     }
 
     /**
-     * Remove a {@link GameObject} from the grid by setting it to null.
+     * Remove a {@link LevelParser} from the grid by setting it to null.
      *
      * @param point the point containing the object to remove
-     * @return boolean  true if it was possible to remove the GameObject, false otherwise
+     * @return boolean  true if it was possible to remove the Entity, false otherwise
      */
     public boolean removeGameObjectAt(Point point) {
         Objects.requireNonNull(point);
@@ -113,14 +104,14 @@ public class GameGrid implements Iterable, Serializable {
 
 
     /**
-     * Put a {@link GameObject} into the specified location (x, y).
+     * Put a {@link LevelParser} into the specified location (x, y).
      *
      * @param x          the x coordinate
      * @param y          the y coordinate
      * @param gameObject the gameObject to be put into the array
      * @return true if the operation is successful, false otherwise
      */
-    public boolean putGameObjectAt(int x, int y, GameObject gameObject) {
+    public boolean putGameObjectAt(int x, int y, LevelParser gameObject) {
         if (isPointOutOfBounds(x, y)) {
             return false;
         }
@@ -130,13 +121,13 @@ public class GameGrid implements Iterable, Serializable {
     }
 
     /**
-     * Puts a {@link GameObject} into the specified point.
+     * Puts a {@link LevelParser} into the specified point.
      *
-     * @param p          the point where the GameObject will be put into
-     * @param gameObject the GameObject to be put into the array
+     * @param p          the point where the Entity will be put into
+     * @param gameObject the Entity to be put into the array
      * @return true if the operation is successful, false otherwise.
      */
-    public boolean putGameObjectAt(Point p, GameObject gameObject) {
+    public boolean putGameObjectAt(Point p, LevelParser gameObject) {
         Objects.requireNonNull(p);
 
         return putGameObjectAt((int) p.getX(), (int) p.getY(), gameObject);
@@ -149,7 +140,7 @@ public class GameGrid implements Iterable, Serializable {
      * @param y the y position on the grid
      * @return true if the point is outside the grid, false otherwise.
      */
-    private boolean isPointOutOfBounds(int x, int y) {
+    private boolean isPointOutOfBounds(double x, double y) {
         return (x < 0 || y < 0 || x >= COLUMNS || y >= ROWS);
     }
 
@@ -167,8 +158,8 @@ public class GameGrid implements Iterable, Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder(gameObjects.length);
 
-        for (GameObject[] gameObject : gameObjects) {
-            for (GameObject aGameObject : gameObject) {
+        for (LevelParser[] gameObject : gameObjects) {
+            for (LevelParser aGameObject : gameObject) {
                 sb.append(aGameObject.getCharSymbol());
             }
 
@@ -184,16 +175,16 @@ public class GameGrid implements Iterable, Serializable {
      * @return an Iterator.
      */
     @Override
-    public Iterator<GameObject> iterator() {
+    public Iterator<LevelParser> iterator() {
         return new GridIterator();
     }
 
     /**
-     * GridIterator provides the interface to iterate through the grid containing the {@link GameObject}s.
+     * GridIterator provides the interface to iterate through the grid containing the {@link LevelParser}s.
      *
      * @see Iterator
      */
-    public class GridIterator implements Iterator<GameObject> {
+    public class GridIterator implements Iterator<LevelParser> {
         int column = -1;
         int row = 0;
 
@@ -217,7 +208,7 @@ public class GameGrid implements Iterable, Serializable {
         }
 
         @Override
-        public GameObject next() {
+        public LevelParser next() {
             if (column < COLUMNS - 1) {
                 column++;
             } else {

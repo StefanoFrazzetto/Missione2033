@@ -76,7 +76,7 @@ public class Path {
 	 * @param x The x coordinate of the new step
 	 * @param y The y coordinate of the new step
 	 */
-	public void prependStep(int x, int y) {
+	public void prependStep(double x, double y) {
 		steps.add(0, new Step(x, y));
 	}
 	

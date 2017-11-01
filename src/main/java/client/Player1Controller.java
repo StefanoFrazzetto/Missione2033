@@ -85,7 +85,7 @@ public class Player1Controller extends PlayerController {
 
         assert agent != null;
 
-        Rectangle2D rectangleRoom = RoomFindingAlgorithm.findRectangleRoom(model.gameGrid, model.entityList, agent.getRow(), agent.getColumn());
+        Rectangle2D rectangleRoom = RoomFindingAlgorithm.findRectangleRoom(model.gameGrid, model.entityList, agent.getX(), agent.getY());
 
         super.draw((int) rectangleRoom.getMinX(), (int) rectangleRoom.getMinY(), (int) rectangleRoom.getWidth(), (int) rectangleRoom.getHeight());
     }

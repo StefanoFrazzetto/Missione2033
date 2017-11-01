@@ -3,6 +3,8 @@ package game;
 import algorithms.*;
 import game.entities.*;
 import game.entities.Character;
+import game.gridobjects.Door;
+import game.gridobjects.Exit;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -38,7 +40,7 @@ public class GameEngine implements Serializable {
     /**
      * The game grid containing the object
      */
-    private GameGrid gameGrid;
+    private Grid<Entity> gameGrid;
 
     /**
      * The list of entities in the level
@@ -94,7 +96,7 @@ public class GameEngine implements Serializable {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
         currentLevel = new Level(inputStream);
         gameGrid = currentLevel.getGameGrid();
-        entityList = currentLevel.getEntityList();
+        entityList = currentLevel.getGameObjectList();
 
         for (Entity entity : entityList) {
             if (entity instanceof Agent) {
@@ -110,7 +112,7 @@ public class GameEngine implements Serializable {
     /**
      * @return the game grid
      */
-    public GameGrid getGameGrid() {
+    public Grid<Entity> getGameGrid() {
         return gameGrid;
     }
 
@@ -141,8 +143,8 @@ public class GameEngine implements Serializable {
     }
 
     public void handleMovement(Direction direction) {
-        int x = agent.getRow();
-        int y = agent.getColumn();
+        double x = agent.getX();
+        double y = agent.getY();
 
         switch (direction) {
             case NORTH:
@@ -168,12 +170,12 @@ public class GameEngine implements Serializable {
         checkGameStatus();
     }
 
-    public boolean isNodeFree(int x, int y) {
-        if (gameGrid.getGameObjectAt(x, y) == GameObject.WALL)
+    public boolean isNodeFree(double x, double y) {
+        if (gameGrid.getGameObjectAt(x, y) == LevelParser.WALL)
             return false;
 
         for (Entity entity : entityList) {
-            if (entity.getRow() == x && entity.getColumn() == y && !(entity instanceof Agent)) {
+            if (entity.getX() == x && entity.getY() == y && !(entity instanceof Agent)) {
 
                 if (entity instanceof Door && !((Door) entity).isOpen()) {
                     return false;
@@ -229,10 +231,10 @@ public class GameEngine implements Serializable {
             AStarPathFinder aStarPathFinder = new AStarPathFinder(new GameMap(this), 500, false);
             Path path = aStarPathFinder.findPath(
                     new UnitMover(),
-                    enemy.getRow(),
-                    enemy.getColumn(),
-                    agent.getRow(),
-                    agent.getColumn()
+                    enemy.getX(),
+                    enemy.getY(),
+                    agent.getX(),
+                    agent.getY()
             );
 
             if (path != null) {
@@ -245,8 +247,8 @@ public class GameEngine implements Serializable {
     public void attack(Character attacker, Direction direction) {
         Character victim = null;
         ArrayList<Character> possibleTargets = new ArrayList<>();
-        int attackerRow = attacker.getRow();
-        int attackerColumn = attacker.getColumn();
+        double attackerRow = attacker.getX();
+        double attackerColumn = attacker.getY();
 
         // if free
         // continue
@@ -260,7 +262,7 @@ public class GameEngine implements Serializable {
             case EAST:
                 for (Entity entity : entityList) {
                     if (entity instanceof Character) {
-                        if (entity.getRow() == attacker.getRow()) {
+                        if (entity.getX() == attacker.getX()) {
                             possibleTargets.add((Character) entity);
                         }
                     }
@@ -268,17 +270,17 @@ public class GameEngine implements Serializable {
 
                 // Get the maximum distance for the weapon
                 if (direction == Direction.EAST) {
-                    int maxReachableColumn = attacker.getColumn() + attacker.getWeapon().getRange();
+                    double maxReachableColumn = attacker.getY() + attacker.getWeapon().getRange();
                     if (maxReachableColumn > gameGrid.getDimension().getWidth()) {
                         maxReachableColumn = (int) gameGrid.getDimension().getWidth();
                     }
 
-                    for (int i = attacker.getColumn() + 1; i < maxReachableColumn; i++) {
+                    for (double i = attacker.getY() + 1; i < maxReachableColumn; i++) {
                         if (isNodeFree(attackerRow, i)) {
                             continue;
                         } else {
                             for (Character character : possibleTargets) {
-                                if (character.getColumn() == i) {
+                                if (character.getY() == i) {
                                     victim = character;
                                     break;
                                 }
@@ -289,17 +291,17 @@ public class GameEngine implements Serializable {
                         }
                     }
                 } else { // WEST
-                    int maxReachableColumn = attacker.getColumn() - attacker.getWeapon().getRange();
+                    double maxReachableColumn = attacker.getY() - attacker.getWeapon().getRange();
                     if (maxReachableColumn < 0) {
                         maxReachableColumn = 0;
                     }
 
-                    for (int i = attacker.getColumn() - 1; i > maxReachableColumn; i--) {
+                    for (double i = attacker.getY() - 1; i > maxReachableColumn; i--) {
                         if (isNodeFree(attackerRow, i)) {
                             continue;
                         } else {
                             for (Character character : possibleTargets) {
-                                if (character.getColumn() == i) {
+                                if (character.getY() == i) {
                                     victim = character;
                                     break;
                                 }
@@ -318,7 +320,7 @@ public class GameEngine implements Serializable {
             case SOUTH:
                 for (Entity entity : entityList) {
                     if (entity instanceof Character) {
-                        if (entity.getColumn() == attacker.getColumn()) {
+                        if (entity.getY() == attacker.getY()) {
                             possibleTargets.add((Character) entity);
                         }
                     }
@@ -326,17 +328,17 @@ public class GameEngine implements Serializable {
 
                 // Get the maximum distance for the weapon
                 if (direction == Direction.NORTH) {
-                    int maxReachableRow = attacker.getRow() - attacker.getWeapon().getRange();
+                    double maxReachableRow = attacker.getX() - attacker.getWeapon().getRange();
                     if (maxReachableRow < 0) {
                         maxReachableRow = 0;
                     }
 
-                    for (int i = attacker.getRow() - 1; i > maxReachableRow; i--) {
+                    for (double i = attacker.getX() - 1; i > maxReachableRow; i--) {
                         if (isNodeFree(i, attackerColumn)) {
                             continue;
                         } else {
                             for (Character character : possibleTargets) {
-                                if (character.getRow() == i) {
+                                if (character.getX() == i) {
                                     victim = character;
                                     break;
                                 }
@@ -347,17 +349,17 @@ public class GameEngine implements Serializable {
                         }
                     }
                 } else { // WEST
-                    int maxReachableRow = attacker.getRow() + attacker.getWeapon().getRange();
+                    double maxReachableRow = attacker.getX() + attacker.getWeapon().getRange();
                     if (maxReachableRow > gameGrid.getDimension().getHeight()) {
                         maxReachableRow = (int) gameGrid.getDimension().getHeight();
                     }
 
-                    for (int i = attacker.getRow() + 1; i < maxReachableRow; i++) {
+                    for (double i = attacker.getX() + 1; i < maxReachableRow; i++) {
                         if (isNodeFree(i, attackerColumn)) {
                             continue;
                         } else {
                             for (Character character : possibleTargets) {
-                                if (character.getRow() == i) {
+                                if (character.getX() == i) {
                                     victim = character;
                                     break;
                                 }
@@ -415,10 +417,10 @@ public class GameEngine implements Serializable {
      *
      * @param doorType the door type
      */
-    public void openDoors(GameObject doorType) {
+    public void openDoors(LevelParser doorType) {
         for (Entity entity : entityList) {
             if (entity instanceof Door) {
-                if (((Door) entity).getType() == doorType)
+                if (((Door) entity).getDoorType() == doorType)
                     ((Door) entity).open(); // if the door matches, open it
                 else
                     ((Door) entity).close(); // otherwise close it
@@ -426,9 +428,9 @@ public class GameEngine implements Serializable {
         }
     }
 
-    public void closeDoors(GameObject doorType) {
+    public void closeDoors(LevelParser doorType) {
         for (Entity entity : entityList) {
-            if (entity instanceof Door && ((Door) entity).getType() == doorType) {
+            if (entity instanceof Door && ((Door) entity).getDoorType() == doorType) {
                 ((Door) entity).close();
             }
         }

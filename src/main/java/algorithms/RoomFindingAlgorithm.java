@@ -1,23 +1,23 @@
 package algorithms;
 
-import game.entities.Door;
+import game.LevelParser;
+import game.gridobjects.Door;
 import game.entities.Entity;
 import game.GameGrid;
-import game.GameObject;
 import javafx.geometry.Rectangle2D;
 
 import java.util.List;
 
 public class RoomFindingAlgorithm {
-    public static Rectangle2D findRectangleRoom(GameGrid grid, List<Entity> entities, int x, int y) {
+    public static Rectangle2D findRectangleRoom(GameGrid grid, List<Entity> entities, double x, double y) {
 
-        int startx = x;
-        int starty = y;
+        double startx = x;
+        double starty = y;
 
-        int minx = 0;
-        int miny = 0;
-        int maxx = 0;
-        int maxy = 0;
+        double minx = 0;
+        double miny = 0;
+        double maxx = 0;
+        double maxy = 0;
 
         // GOES UP 'N  DOWN
 
@@ -43,24 +43,24 @@ public class RoomFindingAlgorithm {
         return new Rectangle2D(minx, miny, maxx - minx, maxy - miny);
     }
 
-    private static boolean isBoundary(GameObject object) {
-        return object != GameObject.FLOOR;
+    private static boolean isBoundary(LevelParser object) {
+        return object != LevelParser.FLOOR;
 
 
     }
 
-    private static boolean isBoundary(GameGrid grid, List<Entity> entities, int x, int y) {
+    private static boolean isBoundary(GameGrid grid, List<Entity> entities, double x, double y) {
         return isThereAWallAt(grid, x, y) || isThereADoorAt(entities, x, y);
     }
 
-    private static boolean isThereAWallAt(GameGrid grid, int x, int y) {
-        return grid.getGameObjectAt(x, y) == GameObject.WALL;
+    private static boolean isThereAWallAt(GameGrid grid, double x, double y) {
+        return grid.getGameObjectAt(x, y) == LevelParser.WALL;
     }
 
-    private static boolean isThereADoorAt(List<Entity> entities, int x, int y) {
+    private static boolean isThereADoorAt(List<Entity> entities, double x, double y) {
         for (Entity entity : entities)
             if (entity instanceof Door) {
-                if (entity.getRow() == x && entity.getColumn() == y)
+                if (entity.getX() == x && entity.getY() == y)
                     return !(((Door) entity).isOpen());
             }
 

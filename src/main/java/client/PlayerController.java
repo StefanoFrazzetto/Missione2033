@@ -1,8 +1,10 @@
 package client;
 
 import game.GameGrid;
-import game.GameObject;
+import game.LevelParser;
 import game.entities.*;
+import game.gridobjects.Door;
+import game.gridobjects.Exit;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -65,7 +67,7 @@ public abstract class PlayerController {
 
         while (iterator.hasNext()) {
 
-            GameObject next = iterator.next();
+            LevelParser next = iterator.next();
             Rectangle rect = new Rectangle(getRectSize(), getRectSize());
 
             int x = iterator.getColumn();
@@ -105,8 +107,8 @@ public abstract class PlayerController {
             Rectangle rect = new Rectangle(getRectSize(), getRectSize());
             rect.setFill(Color.RED);
 
-            int x = entity.getRow();
-            int y = entity.getColumn();
+            double x = entity.getX();
+            double y = entity.getY();
 
             if (x < minx)
                 continue;
@@ -124,13 +126,13 @@ public abstract class PlayerController {
                     rect.setFill(CLOSED_DOOR_COLOR);
                 }
 
-                Text text = new Text(((Door) entity).getType().getStringSymbol());
+                Text text = new Text(((Door) entity).getDoorType().getStringSymbol());
                 StackPane stack = new StackPane();
                 stack.getChildren().add(rect);
                 stack.getChildren().add(text);
 
                 try {
-                    if (model.gameGrid.getGameObjectAt(x + 1, y) != GameObject.FLOOR)
+                    if (model.gameGrid.getGameObjectAt(x + 1, y) != LevelParser.FLOOR)
                         rect.setWidth(getRectSize() / 2);
                     else
                         rect.setHeight(getRectSize() / 2);
@@ -157,7 +159,7 @@ public abstract class PlayerController {
                 node = rect;
             }
 
-            gridPane.add(node, entity.getColumn(), entity.getRow());
+            gridPane.add(node, entity.getY(), entity.getX());
         }
 
         gridPane.getScene().getWindow().sizeToScene();

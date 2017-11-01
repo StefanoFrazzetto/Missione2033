@@ -1,6 +1,5 @@
 package game.entities;
 
-import java.awt.*;
 import java.io.Serializable;
 
 import static java.lang.Math.round;
@@ -12,29 +11,25 @@ import static java.lang.Math.round;
  * @version 1.0.0
  */
 public class Entity implements Serializable {
-    private int row;
+    private double row;
 
-    private int column;
+    private double column;
 
-    public void setCoordinates(int x, int y) {
+    public void setCoordinates(double x, double y) {
         this.row = x;
         this.column = y;
     }
 
-    public int getRow() {
+    public double getX() {
         return row;
     }
 
-    public int getColumn() {
+    public double getY() {
         return column;
     }
 
     public int getDistance(Entity entity) {
-        return (int) round(Math.sqrt(Math.pow(entity.getRow() - this.getRow(), 2) +
-                Math.pow(entity.getColumn() - this.getColumn(), 2)));
-    }
-
-    public Point getCoordinates() {
-        return new Point(row, column);
+        return (int) round(Math.sqrt(Math.pow(entity.getX() - this.getX(), 2) +
+                Math.pow(entity.getY() - this.getY(), 2)));
     }
 }
