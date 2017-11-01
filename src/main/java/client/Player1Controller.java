@@ -76,16 +76,9 @@ public class Player1Controller extends PlayerController {
 
     @Override
     public void draw() {
-        Agent agent = null;
+        Agent agent = model.level.getEntities().getAgents().get(0);
 
-        for (Entity ent : model.entityList) {
-            if (ent instanceof Agent)
-                agent = (Agent) ent;
-        }
-
-        assert agent != null;
-
-        Rectangle2D rectangleRoom = RoomFindingAlgorithm.findRectangleRoom(model.gameGrid, model.entityList, agent.getX(), agent.getY());
+        Rectangle2D rectangleRoom = RoomFindingAlgorithm.findRectangleRoom(model.level, (int) agent.getX(), (int) agent.getY());
 
         super.draw((int) rectangleRoom.getMinX(), (int) rectangleRoom.getMinY(), (int) rectangleRoom.getWidth(), (int) rectangleRoom.getHeight());
     }
