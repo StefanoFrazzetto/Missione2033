@@ -3,13 +3,15 @@ package game;
 import game.gridobjects.Floor;
 import game.gridobjects.GridObject;
 
+import java.io.Serializable;
+
 /**
  * Level
  *
  * @author stefano
  * @version 1.0.0
  */
-public class Level {
+public class Level implements Serializable {
 
     private final Grid<GridObject> gameGrid;
 

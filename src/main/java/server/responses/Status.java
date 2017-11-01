@@ -4,7 +4,6 @@ import game.GameEngine;
 import utils.Serializer;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 /**
  * Status
@@ -14,36 +13,28 @@ import java.io.Serializable;
  */
 public class Status {
     private final String status;
-    private final String serializedGameGrid;
-    private final String serializedEntityList;
+    private final String serializedLevel;
 
     public static Status fromGameEngine(GameEngine gameEngine) {
         String status = "Unknown status";
-        String gameGrid = null;
-        String entityList = null;
+        String serializedLevel = null;
 
         try {
-            gameGrid = Serializer.toString(gameEngine.getGameGrid());
-            entityList = Serializer.toString((Serializable) gameEngine.getEntityList());
             status = gameEngine.getGameStatus().getString();
+            serializedLevel = Serializer.toString(gameEngine.getLevel());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Status(status, gameGrid, entityList);
+        return new Status(status, serializedLevel);
     }
 
-    public Status(String status, String serializedGameGrid, String serializedEntityList) {
+    public Status(String status, String serializedLevel) {
         this.status = status;
-        this.serializedGameGrid = serializedGameGrid;
-        this.serializedEntityList = serializedEntityList;
+        this.serializedLevel = serializedLevel;
     }
 
-    public String getSerializedGameGrid() {
-        return serializedGameGrid;
-    }
-
-    public String getSerializedEntityList() {
-        return serializedEntityList;
+    public String getSerializedLevel() {
+        return serializedLevel;
     }
 
     public String getStatus() {
