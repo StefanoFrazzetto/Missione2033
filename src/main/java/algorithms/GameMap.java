@@ -17,19 +17,18 @@ public class GameMap implements TileBasedMap {
         gameEngine = Application.getEngine();
     }
 
-    public GameMap(GameEngine gameEngine){
+    public GameMap(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
     }
 
     @Override
     public int getWidthInTiles() {
-        return
-                gameEngine.getGameGrid().COLUMNS;
+        return gameEngine.getGameGrid().getWidth();
     }
 
     @Override
     public int getHeightInTiles() {
-        return gameEngine.getGameGrid().ROWS;
+        return gameEngine.getGameGrid().getHeight();
     }
 
     @Override
@@ -38,7 +37,7 @@ public class GameMap implements TileBasedMap {
     }
 
     @Override
-    public boolean blocked(Mover mover, double x, double y) {
+    public boolean blocked(Mover mover, int x, int y) {
         return !gameEngine.isNodeFree(x, y);
     }
 

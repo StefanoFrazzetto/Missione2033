@@ -62,9 +62,9 @@ public class AStarPathFinder implements PathFinder {
 	}
 	
 	/**
-	 * @see PathFinder#findPath(Mover, double, double, double, double)
+	 * @see PathFinder#findPath(Mover, int, int, int, int)
 	 */
-	public Path findPath(Mover mover, double sx, double sy, double tx, double ty) {
+	public Path findPath(Mover mover, int sx, int sy, int tx, int ty) {
 		// easy first check, if the destination is blocked, we can't get there
 		if (map.blocked(mover, tx, ty)) {
 			return null;
@@ -246,7 +246,7 @@ public class AStarPathFinder implements PathFinder {
 	 * @param y The y coordinate of the location to check
 	 * @return True if the location is valid for the given mover
 	 */
-	protected boolean isValidLocation(Mover mover, double sx, double sy, int x, int y) {
+	protected boolean isValidLocation(Mover mover, int sx, int sy, int x, int y) {
 		boolean invalid = (x < 0) || (y < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles());
 		
 		if ((!invalid) && ((sx != x) || (sy != y))) {
@@ -281,7 +281,7 @@ public class AStarPathFinder implements PathFinder {
 	 * @param ty The y coordinate of the target location
 	 * @return The heuristic cost assigned to the tile
 	 */
-	public float getHeuristicCost(Mover mover, int x, int y, double tx, double ty) {
+	public float getHeuristicCost(Mover mover, int x, int y, int tx, int ty) {
 		return heuristic.getCost(map, mover, x, y, tx, ty);
 	}
 	
