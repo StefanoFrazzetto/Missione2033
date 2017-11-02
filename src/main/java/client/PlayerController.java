@@ -1,5 +1,6 @@
 package client;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import game.entities.Agent;
 import game.entities.Enemy;
 import game.entities.Entity;
@@ -16,6 +17,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class PlayerController {
 
@@ -162,5 +167,22 @@ public abstract class PlayerController {
 
     protected int getRectSize() {
         return 40;
+    }
+
+    public void startTimer(){
+        Timer timer = new java.util.Timer();
+
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(() -> {
+                    try {
+                        model.updateGridGrid();
+                        draw();
+                    } catch (UnirestException | IOException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        }, 0, 250);
     }
 }

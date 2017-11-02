@@ -15,11 +15,11 @@ public class Player1Controller extends PlayerController {
             model = new Player1Model();
             try {
                 model.initGame();
+                startTimer();
             } catch (UnirestException e) {
                 e.printStackTrace();
             }
         });
-
     }
 
     @Override
